@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GezelimGorelim", "GezelimGorelim\GezelimGorelim.csproj", "{49992384-0B2C-42DD-9727-C0645838DB3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GezelimForm", "GezelimForm\GezelimForm.csproj", "{317970E4-788A-4BC9-BDEF-3535BDD75761}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{49992384-0B2C-42DD-9727-C0645838DB3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49992384-0B2C-42DD-9727-C0645838DB3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49992384-0B2C-42DD-9727-C0645838DB3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49992384-0B2C-42DD-9727-C0645838DB3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{317970E4-788A-4BC9-BDEF-3535BDD75761}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{317970E4-788A-4BC9-BDEF-3535BDD75761}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{317970E4-788A-4BC9-BDEF-3535BDD75761}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{317970E4-788A-4BC9-BDEF-3535BDD75761}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BC1ED270-42DD-43CC-B1AE-AC0D30B1C947}
+	EndGlobalSection
+EndGlobal

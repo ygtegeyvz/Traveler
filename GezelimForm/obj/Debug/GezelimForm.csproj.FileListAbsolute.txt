@@ -1,0 +1,14 @@
+D:\Projeler\GezelimGorelim\GezelimForm\bin\Debug\GezelimForm.exe.config
+D:\Projeler\GezelimGorelim\GezelimForm\bin\Debug\GezelimForm.exe
+D:\Projeler\GezelimGorelim\GezelimForm\bin\Debug\GezelimForm.pdb
+D:\Projeler\GezelimGorelim\GezelimForm\bin\Debug\Newtonsoft.Json.dll
+D:\Projeler\GezelimGorelim\GezelimForm\bin\Debug\System.Net.Http.Formatting.dll
+D:\Projeler\GezelimGorelim\GezelimForm\bin\Debug\Newtonsoft.Json.xml
+D:\Projeler\GezelimGorelim\GezelimForm\bin\Debug\System.Net.Http.Formatting.xml
+D:\Projeler\GezelimGorelim\GezelimForm\obj\Debug\GezelimForm.csprojResolveAssemblyReference.cache
+D:\Projeler\GezelimGorelim\GezelimForm\obj\Debug\GezelimForm.Form1.resources
+D:\Projeler\GezelimGorelim\GezelimForm\obj\Debug\GezelimForm.Properties.Resources.resources
+D:\Projeler\GezelimGorelim\GezelimForm\obj\Debug\GezelimForm.csproj.GenerateResource.Cache
+D:\Projeler\GezelimGorelim\GezelimForm\obj\Debug\GezelimForm.csproj.CoreCompileInputs.cache
+D:\Projeler\GezelimGorelim\GezelimForm\obj\Debug\GezelimForm.exe
+D:\Projeler\GezelimGorelim\GezelimForm\obj\Debug\GezelimForm.pdb
