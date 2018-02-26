@@ -5,18 +5,15 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using GezelimGorelim.Models;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace GezelimGorelim.Controllers
 {
     public class LocationController : ApiController
     {
-        public static List<Location> reports = new List<Location>
-        {
-            //new Location { id="1", latitude = 8654465456, longitude = 1134594655},
-            //new Location { id="2", latitude = 2155465456, longitude = 4654594654},
-          
-        };
-
+        public static List<Location> reports = new List<Location> {};
+   
         [HttpGet]
         public List<Location> Get()
         {

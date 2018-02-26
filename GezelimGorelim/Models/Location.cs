@@ -8,8 +8,6 @@ namespace GezelimGorelim.Models
     public class Location
     {
         public string id { get; set; }
-        //public long latitude { get; set; }
-        //public long longitude{ get; set; }
         public string location { get; set; }
     }
 }
