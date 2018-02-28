@@ -26,3 +26,17 @@ D:\githubRepo\Traveler\GezelimForm\obj\Debug\GezelimForm.csproj.GenerateResource
 D:\githubRepo\Traveler\GezelimForm\obj\Debug\GezelimForm.csproj.CoreCompileInputs.cache
 D:\githubRepo\Traveler\GezelimForm\obj\Debug\GezelimForm.exe
 D:\githubRepo\Traveler\GezelimForm\obj\Debug\GezelimForm.pdb
+C:\Belgeler\GitHub\Traveler\GezelimForm\bin\Debug\GezelimForm.exe.config
+C:\Belgeler\GitHub\Traveler\GezelimForm\bin\Debug\GezelimForm.exe
+C:\Belgeler\GitHub\Traveler\GezelimForm\bin\Debug\GezelimForm.pdb
+C:\Belgeler\GitHub\Traveler\GezelimForm\bin\Debug\Newtonsoft.Json.dll
+C:\Belgeler\GitHub\Traveler\GezelimForm\bin\Debug\System.Net.Http.Formatting.dll
+C:\Belgeler\GitHub\Traveler\GezelimForm\bin\Debug\Newtonsoft.Json.xml
+C:\Belgeler\GitHub\Traveler\GezelimForm\bin\Debug\System.Net.Http.Formatting.xml
+C:\Belgeler\GitHub\Traveler\GezelimForm\obj\Debug\GezelimForm.csprojResolveAssemblyReference.cache
+C:\Belgeler\GitHub\Traveler\GezelimForm\obj\Debug\GezelimForm.Form1.resources
+C:\Belgeler\GitHub\Traveler\GezelimForm\obj\Debug\GezelimForm.Properties.Resources.resources
+C:\Belgeler\GitHub\Traveler\GezelimForm\obj\Debug\GezelimForm.csproj.GenerateResource.Cache
+C:\Belgeler\GitHub\Traveler\GezelimForm\obj\Debug\GezelimForm.csproj.CoreCompileInputs.cache
+C:\Belgeler\GitHub\Traveler\GezelimForm\obj\Debug\GezelimForm.exe
+C:\Belgeler\GitHub\Traveler\GezelimForm\obj\Debug\GezelimForm.pdb

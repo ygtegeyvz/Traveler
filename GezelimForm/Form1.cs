@@ -62,7 +62,7 @@ namespace GezelimForm
 
         async Task postRequest()
         {
-            string file_way = @"D:\githubRepo\Traveler\Dataset.txt";
+            string file_way = @"C:\Belgeler\GitHub\Traveler\Dataset.txt";
             FileStream fs = new FileStream(file_way, FileMode.OpenOrCreate, FileAccess.Write);
             List<string> locations = new List<string>();
             List<string> locationsX = new List<string>();

@@ -52,8 +52,8 @@ namespace WebAPI.Controllers
 
             for (int i = 0; i < PointsX.Count; i++)
             {
-               PointXFloat.Add(float.Parse(PointsX[i],
-                         CultureInfo.InvariantCulture.NumberFormat));
+                PointXFloat.Add(float.Parse(PointsX[i],
+                          CultureInfo.InvariantCulture.NumberFormat));
                 PointYFloat.Add(float.Parse(PointsY[i],
                          CultureInfo.InvariantCulture.NumberFormat));
 
@@ -65,30 +65,59 @@ namespace WebAPI.Controllers
         public void reduction()
         {
 
-          //  float x, y;
-            List<float> afterPointX = new List<float>();
-            List<float> afterPointY = new List<float>();
+            ////  float x, y;
+              List<float> afterPointX = new List<float>();
+             List<float> afterPointY = new List<float>();
+            //  List<double> kontrol = new List<double>();
+              double averageValue;
+            //  double a = PointXFloat[PointXFloat.Count-1] - PointXFloat[0];
+            //  double b = PointYFloat[PointYFloat.Count-1] - PointYFloat[0];
+            //  double boy = Math.Sqrt((a * a) + (b * b));
 
-            double a = PointXFloat[PointXFloat.Count-1] - PointXFloat[0];
-            double b = PointYFloat[PointYFloat.Count-1] - PointYFloat[0];
-            double boy = Math.Sqrt((a * a) + (b * b));
+            //  for (int i = 0; i < PointsX.Count; i++)
+            //  {
+            //      float pay = (PointYFloat[i] - PointYFloat[PointYFloat.Count-1]) * (PointXFloat[PointXFloat.Count-1] - PointXFloat[0]);
+            //      float payda = (PointYFloat[PointYFloat.Count-1] - PointYFloat[0]) * (PointXFloat[i] - PointXFloat[PointXFloat.Count-1]);
+            //      //Datasetin boyutuna göre uzaklık değerleri değişiyor formül yanlış
 
-            for (int i = 0; i < PointsX.Count; i++)
+
+            //      kontrol.Add(Math.Abs(pay / payda) / boy );
+
+
+            //  }
+            //  double maxValue = kontrol.Max();
+            //  double minValue = kontrol.Min();
+            //  averageValue = (maxValue + minValue) / 2;
+            //  for (int i = 0; i <kontrol.Count ; i++)
+            //  {
+            //      if (kontrol[i] < averageValue)
+            //      {
+            //          afterPointX.Add(PointXFloat[i]);
+            //          afterPointY.Add(PointYFloat[i]);
+            //      }
+            //  }
+            List<double> sonuc = new List<double>();
+            float a = float.Parse(PointsY.First()) - float.Parse(PointsY.Last());
+            float b = float.Parse(PointsX.Last()) - float.Parse(PointsX.First());
+            float c = PointXFloat[0] * PointYFloat.Last()-PointXFloat.Last()*PointYFloat[0];
+            double d = Math.Sqrt(Math.Pow(a, 2) + Math.Pow(b, 2));
+            for (int i = 0; i < PointYFloat.Count; i++)
             {
-                float pay = (PointYFloat[i] - PointYFloat[PointYFloat.Count-1]) * (PointXFloat[PointXFloat.Count-1] - PointXFloat[0]);
-                float payda = (PointYFloat[PointYFloat.Count-1] - PointYFloat[0]) * (PointXFloat[i] - PointXFloat[PointXFloat.Count-1]);
-                              
-                
-                double kontrol =   Math.Abs(pay/payda) / boy;
-
-                if(kontrol>60 && kontrol < 80)
+                float e = Math.Abs(a * PointXFloat[i] + b * PointYFloat[i] + c);
+                sonuc.Add(e / d);
+            }
+            //Float verinin tamamını almıyo noktadan sonra muhabbeti
+            double maxValue = sonuc.Max();
+            double minValue = sonuc.Min();
+            averageValue = (maxValue + minValue) / 2;
+            for (int i = 0; i < sonuc.Count; i++)
+            {
+                if (sonuc[i] < averageValue)
                 {
                     afterPointX.Add(PointXFloat[i]);
                     afterPointY.Add(PointYFloat[i]);
                 }
-
             }
-
-        }
+            }
     }
 }
