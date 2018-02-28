@@ -162,7 +162,6 @@ D:\githubRepo\Traveler\GezelimGorelim\bin\tr\System.Web.Webpages.Deployment.reso
 D:\githubRepo\Traveler\GezelimGorelim\bin\tr\System.Web.Webpages.Razor.resources.dll
 D:\githubRepo\Traveler\GezelimGorelim\bin\tr\System.Web.Helpers.resources.dll
 D:\githubRepo\Traveler\GezelimGorelim\bin\tr\System.Web.Mvc.resources.dll
-D:\githubRepo\Traveler\GezelimGorelim\obj\Debug\GezelimGorelim.csprojResolveAssemblyReference.cache
 D:\githubRepo\Traveler\GezelimGorelim\obj\Debug\GezelimGorelim.csproj.CoreCompileInputs.cache
 D:\githubRepo\Traveler\GezelimGorelim\obj\Debug\GezelimGorelim.dll
 D:\githubRepo\Traveler\GezelimGorelim\obj\Debug\GezelimGorelim.pdb
