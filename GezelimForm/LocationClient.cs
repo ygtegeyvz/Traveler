@@ -9,6 +9,7 @@ namespace GezelimForm
     class LocationClient
     {
         public string id { get; set; }
-        public string location { get; set; }
+        public string locationsX { get; set; }
+        public string locationsY { get; set; }
     }
 }

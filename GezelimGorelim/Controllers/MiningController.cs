@@ -19,5 +19,24 @@ namespace WebAPI.Controllers
             LocCont.Get().RemoveAt(1);
             return LocCont.Get();
         }
-    }
+
+    //    //public List<Location> reduction()
+    //    //{
+    //    //    float x, y;
+
+    //    //    List<float> points = new List<float>();
+    //    //    List<float> afterPoint = new List<float>();
+
+    //    //    float pay = (y - points[points.Count]) * (points[points.Count] - points[0]);
+    //    //    float payda = (points[points.Count] - points[0]) * (x - points[points.Count]);
+
+    //    //    if (pay / payda < 3)
+    //    //    {
+
+    //    //        afterPoint.Add(points);
+
+    //    //    }
+
+    //}
+}
 }

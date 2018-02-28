@@ -41,7 +41,7 @@ namespace GezelimForm
                                LocationClient[] reports = await response.Content.ReadAsAsync<LocationClient[]>();    
                                 foreach (var report in reports)    
                                 {
-                            Debug.Write("" + report.location);
+                       //     Debug.Write("" + report.location);
                 
                         }    
                             }    
@@ -52,7 +52,7 @@ namespace GezelimForm
                     if (response.IsSuccessStatusCode)
                     {
                         LocationClient report = await response.Content.ReadAsAsync<LocationClient>();
-                        Debug.Write("" + report.location);
+                     //   Debug.Write("" + report.location);
                 
                     }
                 } 
@@ -62,9 +62,12 @@ namespace GezelimForm
 
         async Task postRequest()
         {
-            string file_way = @"D:\Projeler\GezelimGorelim\Dataset.txt";
+            string file_way = @"D:\githubRepo\Traveler\Dataset.txt";
             FileStream fs = new FileStream(file_way, FileMode.OpenOrCreate, FileAccess.Write);
             List<string> locations = new List<string>();
+            List<string> locationsX = new List<string>();
+            List<string> locationsY = new List<string>();
+
             StreamReader reader = new StreamReader("Dataset.txt");
             string contents = reader.ReadToEnd();
             var lines = contents.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
@@ -72,11 +75,25 @@ namespace GezelimForm
             {
                 locations.Add(line);
             }
+
             reader.Close();
-            LocationClient newLocation = new LocationClient();
+             LocationClient newLocation = new LocationClient();
+
             for (int i = 0; i < locations.Count; i++)
             {
-                newLocation.location = locations[i];
+                string [] point = locations[i].Split(',');
+
+                locationsX.Add(point[0]);
+                locationsY.Add(point[1]);
+
+                Array.Clear(point, 0, point.Length);
+            }
+
+            for (int i = 0; i < locations.Count; i++)
+            {
+                newLocation.locationsX = locationsX[i];
+                newLocation.locationsY = locationsY[i];
+
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri("http://localhost:6354/");
@@ -104,9 +121,9 @@ namespace GezelimForm
             GetRequest(textBox1.Text);
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private async void button3_ClickAsync(object sender, EventArgs e)
         {
-            postRequest();
+            await postRequest();
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
