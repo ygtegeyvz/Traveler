@@ -11,15 +11,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using GMap.NET.MapProviders;
+using GMap.NET.WindowsForms;
+using GMap.NET.WindowsForms.Markers;
+using GMap.NET;
+using System.Globalization;
+
 namespace GezelimForm
 {
     public partial class Form1 : Form
     {
-     
+        List<string> latitudeList = new List<string>();
+        List<string> longitudeList = new List<string>();
+
+        List<float> ReductionlatitudeList = new List<float>();
+        List<float> ReductionlongitudeList = new List<float>();
         public Form1()
         {
             InitializeComponent();
-            
         }
 
 
@@ -33,37 +42,94 @@ namespace GezelimForm
 
                 HttpResponseMessage response;
 
-                if (id == "0")    
-                        {    
-                            response = await client.GetAsync("api/Location");    
-                            if (response.IsSuccessStatusCode)    
-                            {    
-                               LocationClient[] reports = await response.Content.ReadAsAsync<LocationClient[]>();    
-                                foreach (var report in reports)    
-                                {
-                       //     Debug.Write("" + report.location);
-                
-                        }    
-                            }    
+                if (id == "0")
+                {
+                    response = await client.GetAsync("api/Location");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        LocationClient[] reports = await response.Content.ReadAsAsync<LocationClient[]>();
+                        foreach (var report in reports)
+                        {
+                            //     Debug.Write("" + report.location);
+                            latitudeList.Add(report.locationsX);
+                            longitudeList.Add(report.locationsY);
+                            label3.Text = "Tamamdır.";
                         }
+                    }
+                }
                 else
                 {
                     response = await client.GetAsync("api/Location/" + id);
                     if (response.IsSuccessStatusCode)
                     {
                         LocationClient report = await response.Content.ReadAsAsync<LocationClient>();
-                     //   Debug.Write("" + report.location);
-                
+                        //   Debug.Write("" + report.location);
+                        latitudeList.Add(report.locationsX);
+                        longitudeList.Add(report.locationsY);
+                        label3.Text = "Tamamdır.";
                     }
-                } 
+                }
             }
 
         }
 
+        async Task GetRequest()
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:6354/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response;
+                response = await client.GetAsync("api/Location");
+                if (response.IsSuccessStatusCode)
+                {
+                    LocationClient[] reports = await response.Content.ReadAsAsync<LocationClient[]>();
+                    foreach (var report in reports)
+                    {
+                        latitudeList.Add(report.locationsX);
+                        longitudeList.Add(report.locationsY);
+                    }
+                }
+            }
+
+        }
+
+        async Task GetReductionRequest(string id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:6354/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response;
+                response = await client.GetAsync("api/Reduction");
+                if (id == "0")
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        ///BURADA HATA VAR 
+                        ReductionClient[] reports = await response.Content.ReadAsAsync<ReductionClient[]>();
+                        foreach (var report in reports)
+                        {
+                            ReductionlatitudeList.Add(report.locationsX);
+                            ReductionlongitudeList.Add(report.locationsY);
+                            label2.Text = "Tamamdır.";
+                        }
+                    }
+                }
+                
+            }
+
+        }
+
+
         async Task postRequest()
         {
-           // string file_way = @"D:\githubRepo\Traveler\GezelimForm\bin\Debug\Dataset.txt";
-           // FileStream fs = new FileStream(file_way, FileMode.OpenOrCreate, FileAccess.Write);
+            // string file_way = @"D:\githubRepo\Traveler\GezelimForm\bin\Debug\Dataset.txt";
+            // FileStream fs = new FileStream(file_way, FileMode.OpenOrCreate, FileAccess.Write);
             List<string> locations = new List<string>();
             List<string> locationsX = new List<string>();
             List<string> locationsY = new List<string>();
@@ -76,11 +142,11 @@ namespace GezelimForm
             }
 
             reader.Close();
-             LocationClient newLocation = new LocationClient();
+            LocationClient newLocation = new LocationClient();
 
             for (int i = 0; i < locations.Count; i++)
             {
-                string [] point = locations[i].Split(',');
+                string[] point = locations[i].Split(',');
 
                 locationsX.Add(point[0]);
                 locationsY.Add(point[1]);
@@ -128,6 +194,87 @@ namespace GezelimForm
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // GetRequest("0");
+            // Çakışma oluyo Serverdan yanıt gelmıyo
+
+            GMapOverlay routes = new GMapOverlay("routes");
+            List<PointLatLng> points = new List<PointLatLng>();
+            List<GMapMarker> markerList = new List<GMapMarker>();
+            map.MapProvider = GMapProviders.GoogleMap;
+            map.MaxZoom = 100;
+            map.MinZoom = 1;
+            map.DragButton = MouseButtons.Right;
+            GMapOverlay markers = new GMapOverlay("markers");
+            for (int i = 0; i < latitudeList.Count; i++)
+            {
+                markerList.Add(new GMarkerGoogle(new PointLatLng(double.Parse(latitudeList[i], CultureInfo.InvariantCulture.NumberFormat), double.Parse(longitudeList[i], CultureInfo.InvariantCulture.NumberFormat)),
+                GMarkerGoogleType.red_pushpin)
+                {
+                    ToolTipText = "" + latitudeList[i] + "-" + longitudeList[i],
+                    ToolTipMode = MarkerTooltipMode.OnMouseOver
+                });
+            }
+            for (int i = 0; i < markerList.Count; i++)
+            {
+                markers.Markers.Add(markerList[i]);
+            }
+            map.Overlays.Add(markers);
+
+            for (int i = 0; i < latitudeList.Count; i++)
+            {
+                points.Add(new PointLatLng(double.Parse(latitudeList[i], CultureInfo.InvariantCulture.NumberFormat), double.Parse(longitudeList[i], CultureInfo.InvariantCulture.NumberFormat)));
+            }
+
+
+            GMapRoute route = new GMapRoute(points,"Veriler");
+            route.Stroke = new Pen(Color.Red, 3);
+            routes.Routes.Add(route);
+            map.Overlays.Add(routes);
+            ///////////////////////////////////////////////////////////////
+
+            GMapOverlay Reductionroutes = new GMapOverlay("Reductionroutes");
+            List<PointLatLng> Reductionpoints = new List<PointLatLng>();
+            List<GMapMarker> ReductionmarkerList = new List<GMapMarker>();
+            GMapOverlay Reductionmarkers = new GMapOverlay("Reductionmarkers");
+            for (int i = 0; i < ReductionlatitudeList.Count; i++)
+            {
+                ReductionmarkerList.Add(new GMarkerGoogle((new PointLatLng(ReductionlatitudeList[i],ReductionlongitudeList[i])),
+                GMarkerGoogleType.blue_pushpin)
+                {
+                    ToolTipText = "" + ReductionlatitudeList[i] + "-" + ReductionlongitudeList[i],
+                    ToolTipMode = MarkerTooltipMode.OnMouseOver
+                });
+            }
+            for (int i = 0; i < ReductionmarkerList.Count; i++)
+            {
+                Reductionmarkers.Markers.Add(ReductionmarkerList[i]);
+            }
+            map.Overlays.Add(Reductionmarkers);
+
+            for (int i = 0; i < ReductionlatitudeList.Count; i++)
+            {
+                Reductionpoints.Add(new PointLatLng(ReductionlatitudeList[i],ReductionlongitudeList[i]));
+            }
+
+
+            GMapRoute Reductionroute = new GMapRoute(points, "Veriler");
+            Reductionroute.Stroke = new Pen(Color.Blue, 3);
+            Reductionroutes.Routes.Add(route);
+            map.Overlays.Add(Reductionroutes);
+        }
+
+        private void gmap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
+        {
+            Console.WriteLine(String.Format("Marker {0} was clicked.", item.Tag));
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            GetReductionRequest("0");
         }
     }
 }

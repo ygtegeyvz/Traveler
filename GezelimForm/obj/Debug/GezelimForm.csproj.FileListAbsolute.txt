@@ -40,3 +40,15 @@ C:\Belgeler\GitHub\Traveler\GezelimForm\obj\Debug\GezelimForm.csproj.GenerateRes
 C:\Belgeler\GitHub\Traveler\GezelimForm\obj\Debug\GezelimForm.csproj.CoreCompileInputs.cache
 C:\Belgeler\GitHub\Traveler\GezelimForm\obj\Debug\GezelimForm.exe
 C:\Belgeler\GitHub\Traveler\GezelimForm\obj\Debug\GezelimForm.pdb
+C:\Belgeler\GitHub\Traveler\GezelimForm\bin\Debug\EntityFramework.dll
+C:\Belgeler\GitHub\Traveler\GezelimForm\bin\Debug\EntityFramework.SqlServer.dll
+C:\Belgeler\GitHub\Traveler\GezelimForm\bin\Debug\GMap.NET.Core.dll
+C:\Belgeler\GitHub\Traveler\GezelimForm\bin\Debug\GMap.NET.WindowsForms.dll
+C:\Belgeler\GitHub\Traveler\GezelimForm\bin\Debug\GMap.NET.WindowsPresentation.dll
+C:\Belgeler\GitHub\Traveler\GezelimForm\bin\Debug\System.Data.SQLite.dll
+C:\Belgeler\GitHub\Traveler\GezelimForm\bin\Debug\System.Data.SQLite.EF6.dll
+C:\Belgeler\GitHub\Traveler\GezelimForm\bin\Debug\System.Data.SQLite.Linq.dll
+C:\Belgeler\GitHub\Traveler\GezelimForm\bin\Debug\EntityFramework.xml
+C:\Belgeler\GitHub\Traveler\GezelimForm\bin\Debug\EntityFramework.SqlServer.xml
+C:\Belgeler\GitHub\Traveler\GezelimForm\bin\Debug\System.Data.SQLite.xml
+C:\Belgeler\GitHub\Traveler\GezelimForm\bin\Debug\System.Data.SQLite.dll.config
