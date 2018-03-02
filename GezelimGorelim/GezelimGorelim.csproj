@@ -114,9 +114,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\LatLong.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Reduction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\ReductionObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

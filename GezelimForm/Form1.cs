@@ -16,6 +16,7 @@ using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using GMap.NET;
 using System.Globalization;
+using System.Net;
 
 namespace GezelimForm
 {
@@ -100,27 +101,40 @@ namespace GezelimForm
         {
             using (var client = new HttpClient())
             {
+                var result = new List<ReductionClient>();
                 client.BaseAddress = new Uri("http://localhost:6354/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response;
-                response = await client.GetAsync("api/Reduction");
-                if (id == "0")
+
+
+                HttpWebRequest request = WebRequest.Create("http://localhost:6354/api/reduction") as HttpWebRequest;
+                string jsonVerisi = "";
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
                 {
-                    if (response.IsSuccessStatusCode)
-                    {
-                        ///BURADA HATA VAR 
-                        ReductionClient[] reports = await response.Content.ReadAsAsync<ReductionClient[]>();
-                        foreach (var report in reports)
-                        {
-                            ReductionlatitudeList.Add(report.locationsX);
-                            ReductionlongitudeList.Add(report.locationsY);
-                            label2.Text = "Tamamdır.";
-                        }
-                    }
+                    StreamReader reader = new StreamReader(response.GetResponseStream());
+                    //jsonVerisi adlı değişkene elde ettiği veriyi atıyoruz.
+                    jsonVerisi = reader.ReadToEnd();
                 }
-                
+
+                /* HttpResponseMessage response;
+                  response = await client.GetAsync("api/reduction");
+                 if (id == "0")
+                 {
+                     if (response.IsSuccessStatusCode)
+                     {
+                         ///BURADA HATA VAR 
+                         ReductionClient[] reports = await response.Content.ReadAsAsync<ReductionClient[]>();
+                         foreach (var report in reports)
+                         {
+                             ReductionlatitudeList.Add(report.locationsX);
+                             ReductionlongitudeList.Add(report.locationsY);
+                             label2.Text = "Tamamdır.";
+                         }
+                     }
+                 }
+             */
+
             }
 
         }
@@ -272,9 +286,9 @@ namespace GezelimForm
             Console.WriteLine(String.Format("Marker {0} was clicked.", item.Tag));
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private async void button4_Click(object sender, EventArgs e)
         {
-            GetReductionRequest("0");
+            await GetReductionRequest("0");
         }
     }
 }
