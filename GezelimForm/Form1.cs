@@ -108,32 +108,35 @@ namespace GezelimForm
 
 
 
-                HttpWebRequest request = WebRequest.Create("http://localhost:6354/api/reduction") as HttpWebRequest;
-                string jsonVerisi = "";
-                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                //HttpWebRequest request = WebRequest.Create("http://localhost:6354/api/reduction") as HttpWebRequest;
+                //string jsonVerisi = "";
+                //using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                //{
+                //    StreamReader reader = new StreamReader(response.GetResponseStream());
+                //    //jsonVerisi adlı değişkene elde ettiği veriyi atıyoruz.
+                //    jsonVerisi = reader.ReadToEnd();
+                //}
+
+                HttpResponseMessage response;
+                response = await client.GetAsync("api/reduction");
+                if (id == "0")
                 {
-                    StreamReader reader = new StreamReader(response.GetResponseStream());
-                    //jsonVerisi adlı değişkene elde ettiği veriyi atıyoruz.
-                    jsonVerisi = reader.ReadToEnd();
+                    if (response.IsSuccessStatusCode)
+                    {
+                       // BURADA HATA VAR
+                         ReductionClient reports = await response.Content.ReadAsAsync<ReductionClient>();
+                      //  foreach (var report in reports)
+                        {
+                            for (int i = 0; i < reports.coordinate.locationsX.Count; i++)
+                            {
+                                ReductionlatitudeList.Add(reports.coordinate.locationsX[i]);
+                                ReductionlongitudeList.Add(reports.coordinate.locationsY[i]);
+                                label2.Text = "Tamamdır.";
+                            }
+                        }
+                    }
                 }
 
-                /* HttpResponseMessage response;
-                  response = await client.GetAsync("api/reduction");
-                 if (id == "0")
-                 {
-                     if (response.IsSuccessStatusCode)
-                     {
-                         ///BURADA HATA VAR 
-                         ReductionClient[] reports = await response.Content.ReadAsAsync<ReductionClient[]>();
-                         foreach (var report in reports)
-                         {
-                             ReductionlatitudeList.Add(report.locationsX);
-                             ReductionlongitudeList.Add(report.locationsY);
-                             label2.Text = "Tamamdır.";
-                         }
-                     }
-                 }
-             */
 
             }
 
@@ -226,7 +229,7 @@ namespace GezelimForm
             for (int i = 0; i < latitudeList.Count; i++)
             {
                 markerList.Add(new GMarkerGoogle(new PointLatLng(double.Parse(latitudeList[i], CultureInfo.InvariantCulture.NumberFormat), double.Parse(longitudeList[i], CultureInfo.InvariantCulture.NumberFormat)),
-                GMarkerGoogleType.red_pushpin)
+                GMarkerGoogleType.red_small)
                 {
                     ToolTipText = "" + latitudeList[i] + "-" + longitudeList[i],
                     ToolTipMode = MarkerTooltipMode.OnMouseOver
@@ -245,7 +248,7 @@ namespace GezelimForm
 
 
             GMapRoute route = new GMapRoute(points,"Veriler");
-            route.Stroke = new Pen(Color.Red, 3);
+            route.Stroke = new Pen(Color.Red, 5);
             routes.Routes.Add(route);
             map.Overlays.Add(routes);
             ///////////////////////////////////////////////////////////////
@@ -257,7 +260,7 @@ namespace GezelimForm
             for (int i = 0; i < ReductionlatitudeList.Count; i++)
             {
                 ReductionmarkerList.Add(new GMarkerGoogle((new PointLatLng(ReductionlatitudeList[i],ReductionlongitudeList[i])),
-                GMarkerGoogleType.blue_pushpin)
+                GMarkerGoogleType.blue_small)
                 {
                     ToolTipText = "" + ReductionlatitudeList[i] + "-" + ReductionlongitudeList[i],
                     ToolTipMode = MarkerTooltipMode.OnMouseOver
@@ -275,9 +278,9 @@ namespace GezelimForm
             }
 
 
-            GMapRoute Reductionroute = new GMapRoute(points, "Veriler");
-            Reductionroute.Stroke = new Pen(Color.Blue, 3);
-            Reductionroutes.Routes.Add(route);
+            GMapRoute Reductionroute = new GMapRoute(Reductionpoints, "Veriler");
+            Reductionroute.Stroke = new Pen(Color.Blue, 5);
+            Reductionroutes.Routes.Add(Reductionroute);
             map.Overlays.Add(Reductionroutes);
         }
 
