@@ -231,7 +231,7 @@ namespace GezelimForm
                 markerList.Add(new GMarkerGoogle(new PointLatLng(double.Parse(latitudeList[i], CultureInfo.InvariantCulture.NumberFormat), double.Parse(longitudeList[i], CultureInfo.InvariantCulture.NumberFormat)),
                 GMarkerGoogleType.red_small)
                 {
-                    ToolTipText = "" + latitudeList[i] + "-" + longitudeList[i],
+                    ToolTipText = "" + latitudeList[i] + "-" + longitudeList[i]+"+"+latitudeList.IndexOf(latitudeList[i]),
                     ToolTipMode = MarkerTooltipMode.OnMouseOver
                 });
             }
@@ -262,7 +262,7 @@ namespace GezelimForm
                 ReductionmarkerList.Add(new GMarkerGoogle((new PointLatLng(ReductionlatitudeList[i],ReductionlongitudeList[i])),
                 GMarkerGoogleType.blue_small)
                 {
-                    ToolTipText = "" + ReductionlatitudeList[i] + "-" + ReductionlongitudeList[i],
+                    ToolTipText = "" + ReductionlatitudeList[i] + "-" + ReductionlongitudeList[i]+"+"+ReductionlatitudeList.IndexOf(ReductionlatitudeList[i]),
                     ToolTipMode = MarkerTooltipMode.OnMouseOver
                 });
             }
