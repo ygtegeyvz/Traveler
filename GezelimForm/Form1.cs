@@ -62,12 +62,11 @@ namespace GezelimForm
 
         async Task postRequest()
         {
-            string file_way = @"C:\Belgeler\GitHub\Traveler\Dataset.txt";
-            FileStream fs = new FileStream(file_way, FileMode.OpenOrCreate, FileAccess.Write);
+           // string file_way = @"D:\githubRepo\Traveler\GezelimForm\bin\Debug\Dataset.txt";
+           // FileStream fs = new FileStream(file_way, FileMode.OpenOrCreate, FileAccess.Write);
             List<string> locations = new List<string>();
             List<string> locationsX = new List<string>();
             List<string> locationsY = new List<string>();
-
             StreamReader reader = new StreamReader("Dataset.txt");
             string contents = reader.ReadToEnd();
             var lines = contents.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);

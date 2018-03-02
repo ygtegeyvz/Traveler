@@ -2,6 +2,7 @@
 using GezelimGorelim.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -17,8 +18,8 @@ namespace WebAPI.Controllers
         [HttpGet]
         public List<Location> nbr()
         {
-            bir();
-            reduction();
+          //  bir();
+            //Reduction();
             LocCont.Get().RemoveAt(1);
 
             return LocCont.Get();
@@ -61,11 +62,14 @@ namespace WebAPI.Controllers
 
         }
 
-
-        public void reduction()
+        [Route("api/Reduction")]
+        [HttpGet]
+        public Tuple<List<float>,List<float>,double,double> Reduction()
         {
-
-            ////  float x, y;
+            bir();
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            double indirgenmeOrani;
               List<float> afterPointX = new List<float>();
              List<float> afterPointY = new List<float>();
             //  List<double> kontrol = new List<double>();
@@ -118,6 +122,11 @@ namespace WebAPI.Controllers
                     afterPointY.Add(PointYFloat[i]);
                 }
             }
+            watch.Stop();
+           double timer = watch.Elapsed.TotalMilliseconds;
+            indirgenmeOrani = (1 - ((double)afterPointX.Count / PointsX.Count)) * 100;
+
+            return Tuple.Create(afterPointX, afterPointY, indirgenmeOrani, timer);
             }
     }
 }

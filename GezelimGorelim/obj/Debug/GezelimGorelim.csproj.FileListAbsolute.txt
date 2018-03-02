@@ -249,3 +249,4 @@ C:\Belgeler\GitHub\Traveler\GezelimGorelim\obj\Debug\GezelimGorelim.csprojResolv
 C:\Belgeler\GitHub\Traveler\GezelimGorelim\obj\Debug\GezelimGorelim.csproj.CoreCompileInputs.cache
 C:\Belgeler\GitHub\Traveler\GezelimGorelim\obj\Debug\GezelimGorelim.dll
 C:\Belgeler\GitHub\Traveler\GezelimGorelim\obj\Debug\GezelimGorelim.pdb
+D:\githubRepo\Traveler\GezelimGorelim\obj\Debug\GezelimGorelim.csprojResolveAssemblyReference.cache
