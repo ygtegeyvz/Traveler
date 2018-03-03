@@ -7,7 +7,7 @@ namespace GezelimGorelim.Models
 {
     public class LatLong
     {
-        public List<float> locationsX { get; set; }
-        public List<float> locationsY { get; set; }
+        public List<double> locationsX { get; set; }
+        public List<double> locationsY { get; set; }
     }
 }

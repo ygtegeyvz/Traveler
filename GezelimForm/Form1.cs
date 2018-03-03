@@ -132,6 +132,8 @@ namespace GezelimForm
                                 ReductionlatitudeList.Add(reports.coordinate.locationsX[i]);
                                 ReductionlongitudeList.Add(reports.coordinate.locationsY[i]);
                                 label2.Text = "Tamamdır.";
+                                label4.Text = "Süre" + reports.timer.ToString();
+                                label5.Text = "Oran:" + reports.indirgenmeOrani.ToString();
                             }
                         }
                     }
@@ -146,7 +148,8 @@ namespace GezelimForm
         async Task postRequest()
         {
             // string file_way = @"D:\githubRepo\Traveler\GezelimForm\bin\Debug\Dataset.txt";
-            // FileStream fs = new FileStream(file_way, FileMode.OpenOrCreate, FileAccess.Write);
+             string file_way = @"C:\Belgeler\GitHub\Traveler\Dataset.txt";
+             FileStream fs = new FileStream(file_way, FileMode.OpenOrCreate, FileAccess.Write);
             List<string> locations = new List<string>();
             List<string> locationsX = new List<string>();
             List<string> locationsY = new List<string>();

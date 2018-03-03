@@ -8,7 +8,7 @@ namespace GezelimGorelim.Models
     public class Location
     {
         public string id { get; set; }
-        public string locationsX { get; set; }
-        public string locationsY { get; set; }
+        public double locationsX { get; set; }
+        public double locationsY { get; set; }
     }
 }
