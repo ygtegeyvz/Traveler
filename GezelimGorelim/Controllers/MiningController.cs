@@ -13,7 +13,7 @@ using System.Web.Http;
 
 namespace WebAPI.Controllers
 {
-    public class HomeController : ApiController
+    public class MiningController : ApiController
     {
         //BURADA MADEN ÇALIŞMASI VARDIR.
         LocationController LocCont = new LocationController();

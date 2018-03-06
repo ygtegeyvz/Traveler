@@ -117,12 +117,17 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\MiningController.cs" />
+    <Compile Include="Controllers\QueryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="KDNode.cs" />
+    <Compile Include="KDTree.cs" />
+    <Compile Include="MinPriorityQueue.cs" />
     <Compile Include="Models\LatLong.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Reduction.cs" />
+    <Compile Include="Points.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\ReductionObject.cs" />
   </ItemGroup>
