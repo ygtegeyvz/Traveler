@@ -11,7 +11,7 @@ namespace GezelimGorelim
         /// </summary>
         public class KDNode : IComparable<KDNode>, IComparable
         {
-            private Points data;
+            public Points data;
             private KDNode left;
             private KDNode right;
             private int depth;

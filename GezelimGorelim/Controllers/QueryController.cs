@@ -70,11 +70,16 @@ namespace GezelimGorelim.Controllers
                 {
                     t.Insert(new KDNode(new Points(ReductionlatitudeList[i], ReductionlongitudeList[i])), t.Root);
                 }
-                Points find = new Points(39.907422, 116.37319);
 
-                KDNode found = t.NNSearch(find);
-                 //En yakın noktayı buluyor.
-              
+                Points find = new Points(39.907422, 116.3);
+                Points find2 = new Points(40.018998, 116.320248);
+
+
+
+                //KDNode found = t.NNSearch(find);
+                List<KDNode> found = t.RangeSearch(find,find2);
+                //En yakın noktayı buluyor.
+
 
             }
 

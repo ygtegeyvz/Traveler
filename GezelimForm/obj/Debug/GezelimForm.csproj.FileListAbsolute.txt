@@ -19,7 +19,6 @@ D:\githubRepo\Traveler\GezelimForm\bin\Debug\Newtonsoft.Json.dll
 D:\githubRepo\Traveler\GezelimForm\bin\Debug\System.Net.Http.Formatting.dll
 D:\githubRepo\Traveler\GezelimForm\bin\Debug\Newtonsoft.Json.xml
 D:\githubRepo\Traveler\GezelimForm\bin\Debug\System.Net.Http.Formatting.xml
-D:\githubRepo\Traveler\GezelimForm\obj\Debug\GezelimForm.csprojResolveAssemblyReference.cache
 D:\githubRepo\Traveler\GezelimForm\obj\Debug\GezelimForm.Form1.resources
 D:\githubRepo\Traveler\GezelimForm\obj\Debug\GezelimForm.Properties.Resources.resources
 D:\githubRepo\Traveler\GezelimForm\obj\Debug\GezelimForm.csproj.GenerateResource.Cache
@@ -64,3 +63,5 @@ D:\githubRepo\Traveler\GezelimForm\bin\Debug\EntityFramework.xml
 D:\githubRepo\Traveler\GezelimForm\bin\Debug\EntityFramework.SqlServer.xml
 D:\githubRepo\Traveler\GezelimForm\bin\Debug\System.Data.SQLite.xml
 D:\githubRepo\Traveler\GezelimForm\bin\Debug\System.Data.SQLite.dll.config
+D:\githubRepo\Traveler\GezelimForm\obj\Debug\GezelimForm.csprojResolveAssemblyReference.cache
+D:\githubRepo\Traveler\GezelimForm\obj\Debug\GezelimForm.csproj.CopyComplete

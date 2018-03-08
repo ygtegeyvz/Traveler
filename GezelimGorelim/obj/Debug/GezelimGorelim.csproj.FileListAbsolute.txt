@@ -249,8 +249,13 @@ C:\Belgeler\GitHub\Traveler\GezelimGorelim\obj\Debug\GezelimGorelim.csprojResolv
 C:\Belgeler\GitHub\Traveler\GezelimGorelim\obj\Debug\GezelimGorelim.csproj.CoreCompileInputs.cache
 C:\Belgeler\GitHub\Traveler\GezelimGorelim\obj\Debug\GezelimGorelim.dll
 C:\Belgeler\GitHub\Traveler\GezelimGorelim\obj\Debug\GezelimGorelim.pdb
-D:\githubRepo\Traveler\GezelimGorelim\obj\Debug\GezelimGorelim.csprojResolveAssemblyReference.cache
 C:\Belgeler\GitHub\Traveler\GezelimGorelim\bin\AForge.dll
 C:\Belgeler\GitHub\Traveler\GezelimGorelim\bin\AForge.Math.dll
 C:\Belgeler\GitHub\Traveler\GezelimGorelim\bin\AForge.xml
 C:\Belgeler\GitHub\Traveler\GezelimGorelim\bin\AForge.Math.xml
+D:\githubRepo\Traveler\GezelimGorelim\bin\AForge.dll
+D:\githubRepo\Traveler\GezelimGorelim\bin\AForge.Math.dll
+D:\githubRepo\Traveler\GezelimGorelim\bin\AForge.xml
+D:\githubRepo\Traveler\GezelimGorelim\bin\AForge.Math.xml
+D:\githubRepo\Traveler\GezelimGorelim\obj\Debug\GezelimGorelim.csprojResolveAssemblyReference.cache
+D:\githubRepo\Traveler\GezelimGorelim\obj\Debug\GezelimGorelim.csproj.CopyComplete

@@ -15,8 +15,8 @@ namespace GezelimGorelim
         public class Points : IComparable<Points>, IComparable
         {
             // TODO: create a an array to N dimensions, rather than a fixed 2D class.
-            private double latitude;
-            private double longitude;
+            public double latitude;
+            public double longitude;
 
 
         ///İŞE YARAMAZ MUHTEMELEN
