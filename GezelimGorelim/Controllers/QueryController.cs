@@ -9,24 +9,43 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Threading;
 
+
 namespace GezelimGorelim.Controllers
 {
-    public class queryController : ApiController
+    public class QueryController : ApiController
     {
 
         List<double> ReductionlatitudeList = new List<double>();
         List<double> ReductionlongitudeList = new List<double>();
+        public static List<Query> reports = new List<Query> { };
+        [HttpGet]
+        public List<Query> Get()
+        {
+            return reports;
+        }
 
+        [HttpPost]
+        public bool Post(Query report)
+        {
+            try
+            {
+                reports.Add(report);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
         public void Inserting()
         {
             for (int i = 0; i < 100000000; i++)
             {
 
             }
-          
-
         }
-        async Task  GetReductionRequest(string id)
+
+        async Task GetReductionRequest(string id)
         {
             using (var client = new HttpClient())
             {
@@ -52,7 +71,6 @@ namespace GezelimGorelim.Controllers
                 {
                     if (response.IsSuccessStatusCode)
                     {
-                        // BURADA HATA VAR
                         ReductionObject reports = await response.Content.ReadAsAsync<ReductionObject>();
                         //  foreach (var report in reports)
                         {
@@ -60,7 +78,7 @@ namespace GezelimGorelim.Controllers
                             {
                                 ReductionlatitudeList.Add(reports.coordinate.locationsX[i]);
                                 ReductionlongitudeList.Add(reports.coordinate.locationsY[i]);
-                                
+
                             }
                         }
                     }
@@ -68,31 +86,41 @@ namespace GezelimGorelim.Controllers
                 KDTree t = new KDTree(new Points(ReductionlatitudeList[0], ReductionlongitudeList[0]), 2);
                 for (int i = 0; i < ReductionlatitudeList.Count; i++)
                 {
-                    t.Insert(new KDNode(new Points(ReductionlatitudeList[i], ReductionlongitudeList[i])), t.Root);
+                    t.Insert(new GezelimGorelim.KDNode(new GezelimGorelim.Points(ReductionlatitudeList[i], ReductionlongitudeList[i])), t.Root);
                 }
+                double searchPoint1x = reports[0].locationsX;
+                double searchPoint1y = reports[0].locationsY;
+                double searchPoint2x = reports[1].locationsX;
+                double searchPoint2y = reports[1].locationsY;
+                Points find = new GezelimGorelim.Points(searchPoint1x, searchPoint1y);
+                Points find2 = new Points(searchPoint2x, searchPoint2y);
 
-                Points find = new Points(39.907422, 116.3);
-                Points find2 = new Points(40.018998, 116.320248);
 
-
-
+                List<double> queryLat = new List<double>();
+                List<double> queryLong = new List<double>();
                 //KDNode found = t.NNSearch(find);
                 List<KDNode> found = t.RangeSearch(find,find2);
                 //En yakın noktayı buluyor.
+                List<Points> foundData = new List<Points>();
+                for (int i = 0; i < found.Count; i++)
+                {
+                    foundData.Add(found[i].data);
+                    queryLat.Add(foundData[i].latitude);
+                    queryLong.Add(foundData[i].longitude);
 
-
+                }
+              
+               
             }
-
         }
-        [Route("api/query")]
-        [HttpGet]
-       public void nbr()
-        {
-            
-            GetReductionRequest("0");
-            Inserting();
 
-        }
+        //public async Task nbrAsync()
+        //{
+
+        //    await GetReductionRequest("0");
+        //    Inserting();
+
+        //}
 
 
 
@@ -100,5 +128,5 @@ namespace GezelimGorelim.Controllers
 
     }
 
-    
+
 }

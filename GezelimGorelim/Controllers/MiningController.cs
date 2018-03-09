@@ -11,7 +11,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 
-namespace WebAPI.Controllers
+namespace GezelimGorelim.Controllers
 {
     public class MiningController : ApiController
     {

@@ -259,3 +259,6 @@ D:\githubRepo\Traveler\GezelimGorelim\bin\AForge.xml
 D:\githubRepo\Traveler\GezelimGorelim\bin\AForge.Math.xml
 D:\githubRepo\Traveler\GezelimGorelim\obj\Debug\GezelimGorelim.csprojResolveAssemblyReference.cache
 D:\githubRepo\Traveler\GezelimGorelim\obj\Debug\GezelimGorelim.csproj.CopyComplete
+C:\Belgeler\GitHub\Traveler\GezelimGorelim\bin\System.Web.Cors.dll
+C:\Belgeler\GitHub\Traveler\GezelimGorelim\bin\System.Web.Http.Cors.dll
+C:\Belgeler\GitHub\Traveler\GezelimGorelim\bin\System.Web.Http.Cors.xml

@@ -22,14 +22,22 @@ namespace GezelimForm
 {
     public partial class Form1 : Form
     {
+        List<double> latList = new List<double>();
+        List<double> longList = new List<double>();
+
         List<string> latitudeList = new List<string>();
         List<string> longitudeList = new List<string>();
 
         List<float> ReductionlatitudeList = new List<float>();
         List<float> ReductionlongitudeList = new List<float>();
+
+        List<double> QuerylatList = new List<double>();
+        List<double> QuerylongList = new List<double>();
+
         public Form1()
         {
             InitializeComponent();
+            map.MouseClick += new MouseEventHandler(map_MouseClick);
         }
 
 
@@ -144,6 +152,34 @@ namespace GezelimForm
 
         }
 
+        //async Task GetQueryRequest(string id)
+        //{
+        //    using (var client = new HttpClient())
+        //    {
+        //        var result = new List<Query>();
+        //        client.BaseAddress = new Uri("http://localhost:6354/");
+        //        client.DefaultRequestHeaders.Accept.Clear();
+        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //        HttpResponseMessage response;
+        //        response = await client.GetAsync("api/Query");
+        //        if (id == "0")
+        //        {
+        //            if (response.IsSuccessStatusCode)
+        //            {
+        //                // BURADA HATA VAR
+        //                QueryClient[] reports = await response.Content.ReadAsAsync<QueryClient[]>();
+        //                foreach (var report in reports)
+        //                {
+        //                   QuerylatList.Add(report.latitude);
+        //                   QuerylongList.Add(report.longitude);
+        //                }
+        //            }
+        //        }
+
+
+        //    }
+
+        //}
 
         async Task postRequest()
         {
@@ -199,6 +235,33 @@ namespace GezelimForm
             }
         }
 
+
+        async Task postLocation()
+        {
+            LocationClient newLocation = new LocationClient();
+            for (int i = 0; i < latList.Count; i++)
+            {
+                newLocation.locationsX = latList[i].ToString();
+                newLocation.locationsY = longList[i].ToString();
+
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://localhost:6354/");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    //QUERY GÖNDEREMEDİM
+                    HttpResponseMessage response = await client.PostAsJsonAsync("api/Query", newLocation);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        bool result = await response.Content.ReadAsAsync<bool>();
+                        if (result)
+                            label7.Text = "Tamamdır.";
+                        else
+                            label7.Text = "Olmadı Kanki";
+                    }
+                }
+            }
+        }
 
 
         private void button2_Click(object sender, EventArgs e)
@@ -295,6 +358,33 @@ namespace GezelimForm
         private async void button4_Click(object sender, EventArgs e)
         {
             await GetReductionRequest("0");
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            postLocation();
+        }
+ 
+        private void map_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (latList.Count < 2)
+            {
+                if (e.Button == System.Windows.Forms.MouseButtons.Left)
+                {
+                    double lat = map.FromLocalToLatLng(e.X, e.Y).Lat;
+                    latList.Add(lat);
+                    double lng = map.FromLocalToLatLng(e.X, e.Y).Lng;
+                    longList.Add(lng);
+                    label6.Text = ("Nokta alındı.");
+                }
+            }
+           
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            //GetQueryRequest("0");
         }
     }
 }
