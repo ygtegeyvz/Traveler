@@ -249,7 +249,7 @@ namespace GezelimForm
                     client.BaseAddress = new Uri("http://localhost:6354/");
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    //QUERY GÖNDEREMEDİM
+  
                     HttpResponseMessage response = await client.PostAsJsonAsync("api/Query", newLocation);
                     if (response.IsSuccessStatusCode)
                     {

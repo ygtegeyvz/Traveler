@@ -18,8 +18,7 @@ namespace GezelimGorelim.Controllers
         List<double> ReductionlatitudeList = new List<double>();
         List<double> ReductionlongitudeList = new List<double>();
         public static List<Query> reports = new List<Query> { };
-        MiningController mine = new MiningController();
-
+        QueryModel queryObject = new QueryModel();
         //public void Inserting()
         //{
         //    for (int i = 0; i < 100000000; i++)
@@ -27,7 +26,7 @@ namespace GezelimGorelim.Controllers
         //    }
         //}
 
-        async Task GetReductionRequest(string id)
+        async Task<QueryModel> GetReductionRequest(string id)
         {
             using (var client = new HttpClient())
             {
@@ -35,18 +34,6 @@ namespace GezelimGorelim.Controllers
                 client.BaseAddress = new Uri("http://localhost:6354/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-
-
-                //HttpWebRequest request = WebRequest.Create("http://localhost:6354/api/reduction") as HttpWebRequest;
-                //string jsonVerisi = "";
-                //using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
-                //{
-                //    StreamReader reader = new StreamReader(response.GetResponseStream());
-                //    //jsonVerisi adlı değişkene elde ettiği veriyi atıyoruz.
-                //    jsonVerisi = reader.ReadToEnd();
-                //}
-
                 HttpResponseMessage response;
                 response = await client.GetAsync("api/reduction");
        
@@ -69,18 +56,20 @@ namespace GezelimGorelim.Controllers
                 {
                     t.Insert(new GezelimGorelim.KDNode(new GezelimGorelim.Points(ReductionlatitudeList[i], ReductionlongitudeList[i])), t.Root);
                 }
-                double searchPoint1x = reports[0].locationsX;
-                double searchPoint1y = reports[0].locationsY;
-                double searchPoint2x = reports[1].locationsX;
-                double searchPoint2y = reports[1].locationsY;
-                Points find = new GezelimGorelim.Points(searchPoint1x, searchPoint1y);
-                Points find2 = new Points(searchPoint2x, searchPoint2y);
+                double searchPoint1x = double.Parse(reports[0].locationsX);
+                double searchPoint1y = double.Parse(reports[0].locationsY);
+                double searchPoint2x = double.Parse(reports[1].locationsX);
+                double searchPoint2y = double.Parse(reports[1].locationsY);
+                //Points find = new GezelimGorelim.Points(searchPoint1x, searchPoint1y);
+                //Points find2 = new Points(searchPoint2x, searchPoint2y);
+                Points find = new Points(39.907422, 116.3);
+                Points find2 = new Points(40.018998, 116.320);
+                
 
-
-                List<double> queryLat = new List<double>();
+                                List <double> queryLat = new List<double>();
                 List<double> queryLong = new List<double>();
                 //KDNode found = t.NNSearch(find);
-                List<KDNode> found = t.RangeSearch(find,find2);
+                List<KDNode> found = t.RangeSearch(find, find2);
                 //En yakın noktayı buluyor.
                 List<Points> foundData = new List<Points>();
                 for (int i = 0; i < found.Count; i++)
@@ -90,8 +79,9 @@ namespace GezelimGorelim.Controllers
                     queryLong.Add(foundData[i].longitude);
 
                 }
-
-
+                queryObject.queryLat = queryLat;
+                queryObject.queryLong = queryLong;
+                return queryObject;
             }
         }
 

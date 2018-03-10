@@ -130,9 +130,10 @@
     <Compile Include="KDNode.cs" />
     <Compile Include="KDTree.cs" />
     <Compile Include="MinPriorityQueue.cs" />
+    <Compile Include="Models\Query.cs" />
     <Compile Include="Models\LatLong.cs" />
     <Compile Include="Models\Location.cs" />
-    <Compile Include="Models\Query.cs" />
+    <Compile Include="Models\QueryModel.cs" />
     <Compile Include="Models\Reduction.cs" />
     <Compile Include="Points.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
