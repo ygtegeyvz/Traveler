@@ -18,32 +18,14 @@ namespace GezelimGorelim.Controllers
         List<double> ReductionlatitudeList = new List<double>();
         List<double> ReductionlongitudeList = new List<double>();
         public static List<Query> reports = new List<Query> { };
-        [HttpGet]
-        public List<Query> Get()
-        {
-            return reports;
-        }
+        MiningController mine = new MiningController();
 
-        [HttpPost]
-        public bool Post(Query report)
-        {
-            try
-            {
-                reports.Add(report);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-        public void Inserting()
-        {
-            for (int i = 0; i < 100000000; i++)
-            {
-
-            }
-        }
+        //public void Inserting()
+        //{
+        //    for (int i = 0; i < 100000000; i++)
+        //    {
+        //    }
+        //}
 
         async Task GetReductionRequest(string id)
         {
@@ -67,8 +49,7 @@ namespace GezelimGorelim.Controllers
 
                 HttpResponseMessage response;
                 response = await client.GetAsync("api/reduction");
-                if (id == "0")
-                {
+       
                     if (response.IsSuccessStatusCode)
                     {
                         ReductionObject reports = await response.Content.ReadAsAsync<ReductionObject>();
@@ -82,7 +63,7 @@ namespace GezelimGorelim.Controllers
                             }
                         }
                     }
-                }
+                
                 KDTree t = new KDTree(new Points(ReductionlatitudeList[0], ReductionlongitudeList[0]), 2);
                 for (int i = 0; i < ReductionlatitudeList.Count; i++)
                 {
@@ -109,8 +90,8 @@ namespace GezelimGorelim.Controllers
                     queryLong.Add(foundData[i].longitude);
 
                 }
-              
-               
+
+
             }
         }
 
@@ -124,7 +105,33 @@ namespace GezelimGorelim.Controllers
 
 
 
+        [HttpGet]
+        public List<Query> Get()
+        {
+            return reports;
+        }
 
+        [Route("api/Query/a")]
+        [HttpGet]
+        public async Task GetiAsync()
+        {
+            await GetReductionRequest("0");
+    }
+
+        [HttpPost]
+        public bool Post(Query report)
+        {
+           
+            try
+            {
+                reports.Add(report);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
     }
 
