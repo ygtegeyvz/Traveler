@@ -40,15 +40,32 @@ namespace GezelimGorelim.Controllers
         [HttpGet]
         public ReductionObject Reduction()
         {
+            List<double> afterPointX = new List<double>();
+            List<double> afterPointY = new List<double>();
+            double maxValue;
+            double minValue;
+            double averageValue;
+            List<double> distance = new List<double>();
+            List<Point> pointsList = new List<Point>();
+            //double averageValue;
+            List<double> sonuc = new List<double>();
+            if (PointsX.Count!=0)
+            {
+                PointsX.Clear();
+                PointsY.Clear();
+                PointXFloat.Clear();
+                PointYFloat.Clear();
+                afterPointX.Clear();
+                afterPointY.Clear();
+                distance.Clear();
+                pointsList.Clear();
+                sonuc.Clear();
+            }
             PointsDefinition();
             Stopwatch watch = new Stopwatch();
             watch.Start();
             double indirgenmeOrani;
-            List<double> afterPointX = new List<double>();
-            List<double> afterPointY = new List<double>();
-
-            //double averageValue;
-            List<double> sonuc = new List<double>();
+        
             //float a = float.Parse(PointsY.First()) - float.Parse(PointsY.Last());
             //float b = float.Parse(PointsX.Last()) - float.Parse(PointsX.First());
             //float c = PointXFloat[0] * PointYFloat.Last() - PointXFloat.Last() * PointYFloat[0];
@@ -80,11 +97,7 @@ namespace GezelimGorelim.Controllers
             //reductionObject.timer = timer;
             //indirgenmeOrani = (1 - ((double)afterPointX.Count / PointsX.Count)) * 100;
             //reductionObject.indirgenmeOrani = indirgenmeOrani;
-            double maxValue;
-            double minValue;
-            double averageValue;
-            List<double> distance = new List<double>();
-            List<Point> pointsList = new List<Point>();
+      
             for (int i = 0; i < PointsX.Count; i++)
             {
                 PointXFloat.Add((float)PointsX[i]

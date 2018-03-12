@@ -189,8 +189,17 @@ namespace GezelimGorelim
                 var currentNode = current.Item2;
                 KDNode near, far;
 
-                if (nokta1.latitude < currentNode.data.latitude && currentNode.data.latitude < nokta2.latitude &&
+                if ((nokta1.latitude < currentNode.data.latitude && currentNode.data.latitude < nokta2.latitude &&
                     nokta1.longitude < currentNode.data.longitude && currentNode.data.longitude < nokta2.longitude)
+                    ||
+                    (nokta1.latitude > currentNode.data.latitude && currentNode.data.latitude > nokta2.latitude &&
+                    nokta1.longitude < currentNode.data.longitude && currentNode.data.longitude < nokta2.longitude)
+                    ||
+                    (nokta1.latitude < currentNode.data.latitude && currentNode.data.latitude < nokta2.latitude &&
+                    nokta1.longitude > currentNode.data.longitude && currentNode.data.longitude > nokta2.longitude)
+                    ||
+                    (nokta1.latitude > currentNode.data.latitude && currentNode.data.latitude > nokta2.latitude &&
+                    nokta1.longitude > currentNode.data.longitude && currentNode.data.longitude > nokta2.longitude))
                 {
                     kDNodes.Add(currentNode);
                     near = currentNode.Left;

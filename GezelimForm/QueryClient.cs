@@ -8,7 +8,7 @@ namespace GezelimForm
 {
     class QueryClient
     {
-        public double latitude { get; set; }
-        public double longitude { get; set; }
+        public List<double> queryLat { get; set; }
+        public List<double> queryLong { get; set; }
     }
 }
