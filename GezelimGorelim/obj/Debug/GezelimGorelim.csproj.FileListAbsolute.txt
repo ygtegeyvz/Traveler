@@ -262,3 +262,6 @@ D:\githubRepo\Traveler\GezelimGorelim\obj\Debug\GezelimGorelim.csproj.CopyComple
 C:\Belgeler\GitHub\Traveler\GezelimGorelim\bin\System.Web.Cors.dll
 C:\Belgeler\GitHub\Traveler\GezelimGorelim\bin\System.Web.Http.Cors.dll
 C:\Belgeler\GitHub\Traveler\GezelimGorelim\bin\System.Web.Http.Cors.xml
+D:\githubRepo\Traveler\GezelimGorelim\bin\System.Web.Cors.dll
+D:\githubRepo\Traveler\GezelimGorelim\bin\System.Web.Http.Cors.dll
+D:\githubRepo\Traveler\GezelimGorelim\bin\System.Web.Http.Cors.xml

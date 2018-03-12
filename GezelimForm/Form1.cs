@@ -71,9 +71,9 @@ namespace GezelimForm
                 {
                     if (response.IsSuccessStatusCode)
                     {
-                       // BURADA HATA VAR
-                         ReductionClient reports = await response.Content.ReadAsAsync<ReductionClient>();
-                      //  foreach (var report in reports)
+                        // BURADA HATA VAR
+                        ReductionClient reports = await response.Content.ReadAsAsync<ReductionClient>();
+                        //  foreach (var report in reports)
                         {
                             for (int i = 0; i < reports.coordinate.locationsX.Count; i++)
                             {
@@ -107,16 +107,16 @@ namespace GezelimForm
                     if (response.IsSuccessStatusCode)
                     {
                         // BURADA HATA VAR
-                        QueryClient[] reports = await response.Content.ReadAsAsync<QueryClient[]>();
-                        foreach (var report in reports)
+                        QueryClient reports = await response.Content.ReadAsAsync<QueryClient>();
+                        //foreach (var report in reports)
+                        //{
+                        for (int i = 0; i < reports.queryLat.Count; i++)
                         {
-                            for (int i = 0; i < report.queryLat.Count; i++)
-                            {
-                                QuerylatList.Add(report.queryLat[i]);
-                                QuerylongList.Add(report.queryLong[i]);
-                            }
-                          
+                            QuerylatList.Add(reports.queryLat[i]);
+                            QuerylongList.Add(reports.queryLong[i]);
                         }
+
+                        //}
                     }
                 }
 
@@ -128,8 +128,8 @@ namespace GezelimForm
         async Task postRequest()
         {
             // string file_way = @"D:\githubRepo\Traveler\GezelimForm\bin\Debug\Dataset.txt";
-             //string file_way = @"C:\Belgeler\GitHub\Traveler\Dataset.txt";
-             //FileStream fs = new FileStream(file_way, FileMode.OpenOrCreate, FileAccess.Write);
+            //string file_way = @"C:\Belgeler\GitHub\Traveler\Dataset.txt";
+            //FileStream fs = new FileStream(file_way, FileMode.OpenOrCreate, FileAccess.Write);
             List<string> locations = new List<string>();
             List<string> locationsX = new List<string>();
             List<string> locationsY = new List<string>();
@@ -173,20 +173,20 @@ namespace GezelimForm
                         if (result)
                         {
                             label1.Text = "Servera veri eklendi.";
-                   
+
                         }
-                           
+
                         else
                         {
                             label1.Text = "Olmadı Kanki";
-                          
+
                         }
                     }
-               
+
                 }
             }
             GetRequest();
-          
+
         }
 
 
@@ -203,7 +203,7 @@ namespace GezelimForm
                     client.BaseAddress = new Uri("http://localhost:6354/");
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-  
+
                     HttpResponseMessage response = await client.PostAsJsonAsync("api/Query", newLocation);
                     if (response.IsSuccessStatusCode)
                     {
@@ -218,7 +218,7 @@ namespace GezelimForm
         }
 
 
-     
+
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
@@ -295,13 +295,13 @@ namespace GezelimForm
             }
             else
                 GetRequest();
-         
+
         }
         private void button1_Click(object sender, EventArgs e)
         {
 
             maps();
-       
+
         }
 
         private void gmap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
@@ -318,7 +318,7 @@ namespace GezelimForm
         {
             postLocation();
         }
- 
+
         private void map_MouseClick(object sender, MouseEventArgs e)
         {
             if (latList.Count < 2)
@@ -331,13 +331,13 @@ namespace GezelimForm
                     longList.Add(lng);
                     label6.Text = ("Nokta alındı.");
                 }
-               
+
             }
-            if(latList.Count==2)
+            if (latList.Count == 2)
             {
                 postLocation();
             }
-           
+
 
         }
         private void button6_Click(object sender, EventArgs e)

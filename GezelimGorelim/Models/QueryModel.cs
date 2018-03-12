@@ -7,7 +7,7 @@ namespace GezelimGorelim.Models
 {
     public class QueryModel
     {
-        public string id { get; set; }
+      //  public string id { get; set; }
         public List<double> queryLat { get; set; }
         public List<double> queryLong { get; set; }
     }
