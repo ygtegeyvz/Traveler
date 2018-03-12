@@ -176,9 +176,6 @@ namespace GezelimGorelim
         {
             List<KDNode> kDNodes = new List<KDNode>();
             MinPriorityQueue<Tuple<double, KDNode>> pq = new MinPriorityQueue<Tuple<double, KDNode>>();
-
-          //  Tuple<double, KDNode> best = new Tuple<double, KDNode>(1.79769e+308, root);
-
             pq.Enqueue(new Tuple<double, KDNode>(0.0, root));
 
             do

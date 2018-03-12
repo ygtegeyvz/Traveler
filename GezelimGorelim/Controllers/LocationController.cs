@@ -14,12 +14,7 @@ namespace GezelimGorelim.Controllers
         {
             return reports;
         }
-        [HttpGet]
-        public Location Get(string id)
-        {
-            return reports.Find((r) => r.id == id);
-        }
-
+      
         [HttpPost]
         public bool Post(Location report)
         {

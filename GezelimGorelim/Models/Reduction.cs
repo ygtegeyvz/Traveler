@@ -7,7 +7,6 @@ namespace GezelimGorelim.Models
 {
     public class Reduction
     {
-        public string id { get; set; }
         public float locationsX { get; set; }
         public float locationsY { get; set; }
         public double timer { get; set; }

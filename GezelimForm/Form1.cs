@@ -57,7 +57,7 @@ namespace GezelimForm
 
         }
 
-        async Task GetReductionRequest(string id)
+        async Task GetReductionRequest()
         {
             using (var client = new HttpClient())
             {
@@ -67,8 +67,6 @@ namespace GezelimForm
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage response;
                 response = await client.GetAsync("api/reduction");
-                if (id == "0")
-                {
                     if (response.IsSuccessStatusCode)
                     {
                         // BURADA HATA VAR
@@ -85,14 +83,14 @@ namespace GezelimForm
                             }
                         }
                     }
-                }
+                
 
 
             }
 
         }
 
-        async Task GetQueryRequest(string id)
+        async Task GetQueryRequest()
         {
             using (var client = new HttpClient())
             {
@@ -102,8 +100,6 @@ namespace GezelimForm
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage response;
                 response = await client.GetAsync("api/Query");
-                if (id == "0")
-                {
                     if (response.IsSuccessStatusCode)
                     {
                         // BURADA HATA VAR
@@ -118,7 +114,7 @@ namespace GezelimForm
                         
                         //}
                     }
-                }
+                
                 colorPoints(QuerylatList,QuerylongList,GMarkerGoogleType.green_small);
 
             }
@@ -310,14 +306,9 @@ namespace GezelimForm
 
         }
 
-        private void gmap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
-        {
-            Console.WriteLine(String.Format("Marker {0} was clicked.", item.Tag));
-        }
-
         private async void button4_Click(object sender, EventArgs e)
         {
-            await GetReductionRequest("0");
+            await GetReductionRequest();
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -348,7 +339,7 @@ namespace GezelimForm
         }
         private void button6_Click(object sender, EventArgs e)
         {
-            GetQueryRequest("0");
+            GetQueryRequest();
 
         }
 
