@@ -21,8 +21,8 @@ namespace GezelimForm
         List<string> latitudeList = new List<string>();
         List<string> longitudeList = new List<string>();
 
-        List<float> ReductionlatitudeList = new List<float>();
-        List<float> ReductionlongitudeList = new List<float>();
+        List<double> ReductionlatitudeList = new List<double>();
+        List<double> ReductionlongitudeList = new List<double>();
 
         List<double> QuerylatList = new List<double>();
         List<double> QuerylongList = new List<double>();
@@ -115,15 +115,36 @@ namespace GezelimForm
                             QuerylatList.Add(reports.queryLat[i]);
                             QuerylongList.Add(reports.queryLong[i]);
                         }
-
+                        
                         //}
                     }
                 }
-
+                colorPoints(QuerylatList,QuerylongList,GMarkerGoogleType.green_small);
 
             }
 
         }
+        public void colorPoints(List<double>latitudeList,List<double> longitudeList,GMarkerGoogleType colour)
+        {
+           
+            List<GMapMarker> queryMarkerList = new List<GMapMarker>();
+            GMapOverlay queryMarkers = new GMapOverlay("queryMarkers");
+            for (int i = 0; i < latitudeList.Count; i++)
+            {
+                queryMarkerList.Add(new GMarkerGoogle((new PointLatLng(latitudeList[i], longitudeList[i])),
+                colour)
+                {
+                    ToolTipText = "" + latitudeList[i] + "-" + longitudeList[i] + "+" + latitudeList.IndexOf(latitudeList[i]),
+                    ToolTipMode = MarkerTooltipMode.OnMouseOver
+                });
+            }
+            for (int i = 0; i < queryMarkerList.Count; i++)
+            {
+                queryMarkers.Markers.Add(queryMarkerList[i]);
+            }
+            map.Overlays.Add(queryMarkers);
+        }
+
 
         async Task postRequest()
         {
@@ -228,6 +249,7 @@ namespace GezelimForm
         {
             if (latitudeList.Count != 0)
             {
+                List<PointLatLng> Reductionpoints = new List<PointLatLng>();
                 GMapOverlay routes = new GMapOverlay("routes");
                 List<PointLatLng> points = new List<PointLatLng>();
                 List<GMapMarker> markerList = new List<GMapMarker>();
@@ -264,23 +286,7 @@ namespace GezelimForm
                 ///////////////////////////////////////////////////////////////
 
                 GMapOverlay Reductionroutes = new GMapOverlay("Reductionroutes");
-                List<PointLatLng> Reductionpoints = new List<PointLatLng>();
-                List<GMapMarker> ReductionmarkerList = new List<GMapMarker>();
-                GMapOverlay Reductionmarkers = new GMapOverlay("Reductionmarkers");
-                for (int i = 0; i < ReductionlatitudeList.Count; i++)
-                {
-                    ReductionmarkerList.Add(new GMarkerGoogle((new PointLatLng(ReductionlatitudeList[i], ReductionlongitudeList[i])),
-                    GMarkerGoogleType.blue_small)
-                    {
-                        ToolTipText = "" + ReductionlatitudeList[i] + "-" + ReductionlongitudeList[i] + "+" + ReductionlatitudeList.IndexOf(ReductionlatitudeList[i]),
-                        ToolTipMode = MarkerTooltipMode.OnMouseOver
-                    });
-                }
-                for (int i = 0; i < ReductionmarkerList.Count; i++)
-                {
-                    Reductionmarkers.Markers.Add(ReductionmarkerList[i]);
-                }
-                map.Overlays.Add(Reductionmarkers);
+                colorPoints(ReductionlatitudeList,ReductionlongitudeList,GMarkerGoogleType.blue_small);
 
                 for (int i = 0; i < ReductionlatitudeList.Count; i++)
                 {
