@@ -30,7 +30,9 @@ namespace GezelimGorelim.Controllers
             for (int i = 0; i < ReductionlatitudeList.Count; i++)
             {
                 t.Insert(new GezelimGorelim.KDNode(new GezelimGorelim.Points(ReductionlatitudeList[i], ReductionlongitudeList[i])), t.Root);
+          
             }
+           
             double searchPoint1x = double.Parse(reports[0].locationsX);
             double searchPoint1y = double.Parse(reports[0].locationsY);
             double searchPoint2x = double.Parse(reports[1].locationsX);
@@ -41,7 +43,13 @@ namespace GezelimGorelim.Controllers
             List<double> queryLat = new List<double>();
             List<double> queryLong = new List<double>();
 
-            List<KDNode> found = t.RangeSearch(find, find2);
+            List<KDNode> found = new List<KDNode>();
+            for (int i = 0; i < mine.Reduction().coordinate.locationsX.Count; i++)
+            {
+                found = t.RangeSearch(new KDNode(new Points(ReductionlatitudeList[i], ReductionlongitudeList[i])), find, find2);
+            }
+    
+          //  List<KDNode> found = t.RangeSearch(find, find2);
             //En yakın noktayı buluyor.
             List<Points> foundData = new List<Points>();
             for (int i = 0; i < found.Count; i++)

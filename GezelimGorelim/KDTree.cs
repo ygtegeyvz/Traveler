@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -44,27 +45,39 @@ namespace GezelimGorelim
         }
 
         /// <summary>
-        /// Prints all elements in the entire tree in-order.
-        /// </summary>
-        /// <param name="node">The node at which we traverse the tree in-order.</param>
-        public static void PrintInOrder(KDNode node)
-        {
-            if (node.Left != null) PrintInOrder(node.Left);
-            Console.Write(node.Data.ToString() + " at " + node.Depth + "\n");
-            if (node.Right != null) PrintInOrder(node.Right);
-        }
-
-        /// <summary>
         /// Prints all elements in the entire tree in pre-order.
         /// </summary>
         /// <param name="node">The node at which we traverse the tree.</param>
-        public static void PrintPreOrder(KDNode node)
+            List<KDNode> kDNodes = new List<KDNode>(); KDNode near, far;
+        public List<KDNode> RangeSearch(KDNode currentNode,Points nokta1,Points nokta2)
         {
-            Console.Write(node.Data.ToString() + " at " + node.Depth + "\n");
-            if (node.Left != null) PrintPreOrder(node.Left);
-            if (node.Right != null) PrintPreOrder(node.Right);
-        }
+            if (currentNode.Left != null) RangeSearch(currentNode.Left,nokta1,nokta2);
+            if (currentNode.Right != null) RangeSearch(currentNode.Right,nokta1,nokta2);
+            if ((nokta1.latitude < currentNode.data.latitude && currentNode.data.latitude < nokta2.latitude &&
+             nokta1.longitude < currentNode.data.longitude && currentNode.data.longitude < nokta2.longitude)
+             ||
+             (nokta1.latitude > currentNode.data.latitude && currentNode.data.latitude > nokta2.latitude &&
+             nokta1.longitude < currentNode.data.longitude && currentNode.data.longitude < nokta2.longitude)
+             ||
+             (nokta1.latitude < currentNode.data.latitude && currentNode.data.latitude < nokta2.latitude &&
+             nokta1.longitude > currentNode.data.longitude && currentNode.data.longitude > nokta2.longitude)
+             ||
+             (nokta1.latitude > currentNode.data.latitude && currentNode.data.latitude > nokta2.latitude &&
+             nokta1.longitude > currentNode.data.longitude && currentNode.data.longitude > nokta2.longitude))
+            {
+                kDNodes.Add(currentNode);
+                near = currentNode.Left;
+                far = currentNode.Right;
+            }
+            else
+            {
 
+                near = currentNode.Right;
+                far = currentNode.Left;
+            }
+            return kDNodes;
+        }   
+      
         /// <summary>
         /// Calculates the euclidean distance between two points (distance formula).
         /// </summary>
@@ -124,96 +137,9 @@ namespace GezelimGorelim
             return root;
         }
 
-        /// <summary>
-        /// Nearest neighbor search method to find the single nearest neighbor at a given point. 
-        /// Translated from https://github.com/gvd/kdtree/blob/master/kdtree.h
-        /// </summary>
-        /// <param name="query">The nearest neighbor search query point.</param>
-        /// <returns>The closest node to the parameter query is returned.</returns>
-        public KDNode NNSearch(Points query)
-        {
-            MinPriorityQueue<Tuple<double, KDNode>> pq = new MinPriorityQueue<Tuple<double, KDNode>>();
+     
 
-            Tuple<double, KDNode> best = new Tuple<double, KDNode>(1.79769e+308, root);
-
-            pq.Enqueue(new Tuple<double, KDNode>(0.0, root));
-
-            do
-            {
-                var current = pq.Dequeue();
-                if (current.Item1 >= best.Item1)
-                {
-                    if (EuclideanDistance(query, current.Item2.Data) > EuclideanDistance(query, best.Item2.Data))
-                        return best.Item2;
-                    else
-                        return current.Item2;
-                }
-
-                var currentNode = current.Item2;
-                double d = EuclideanDistance(query, currentNode.Data);
-                double dx = Subtract(query, currentNode.Data, currentNode.Depth);
-                if (d < best.Item1)
-                {
-                    best = new Tuple<double, KDNode>(d, currentNode);
-                }
-                KDNode near, far;
-
-                if (dx <= 0) near = currentNode.Left;
-                else near = currentNode.Right;
-
-                if (dx <= 0) far = currentNode.Right;
-                else far = currentNode.Left;
-
-                if (near != null) pq.Enqueue(new Tuple<double, KDNode>(0, near));
-                if (far != null) pq.Enqueue(new Tuple<double, KDNode>((dx * dx), far));
-
-            } while (pq.Count() != 0);
-
-            return best.Item2;
-        }
-
-        public List<KDNode> RangeSearch(Points nokta1, Points nokta2)
-        {
-            List<KDNode> kDNodes = new List<KDNode>();
-            MinPriorityQueue<Tuple<double, KDNode>> pq = new MinPriorityQueue<Tuple<double, KDNode>>();
-            pq.Enqueue(new Tuple<double, KDNode>(0.0, root));
-
-            do
-            {
-                var current = pq.Dequeue();
-
-
-                var currentNode = current.Item2;
-                KDNode near, far;
-
-                if ((nokta1.latitude < currentNode.data.latitude && currentNode.data.latitude < nokta2.latitude &&
-                    nokta1.longitude < currentNode.data.longitude && currentNode.data.longitude < nokta2.longitude)
-                    ||
-                    (nokta1.latitude > currentNode.data.latitude && currentNode.data.latitude > nokta2.latitude &&
-                    nokta1.longitude < currentNode.data.longitude && currentNode.data.longitude < nokta2.longitude)
-                    ||
-                    (nokta1.latitude < currentNode.data.latitude && currentNode.data.latitude < nokta2.latitude &&
-                    nokta1.longitude > currentNode.data.longitude && currentNode.data.longitude > nokta2.longitude)
-                    ||
-                    (nokta1.latitude > currentNode.data.latitude && currentNode.data.latitude > nokta2.latitude &&
-                    nokta1.longitude > currentNode.data.longitude && currentNode.data.longitude > nokta2.longitude))
-                {
-                    kDNodes.Add(currentNode);
-                    near = currentNode.Left;
-                    far = currentNode.Right;
-                }
-                else {
-
-                    near = currentNode.Right;
-                     far = currentNode.Left;
-                } 
-
-               if (near != null) pq.Enqueue(new Tuple<double, KDNode>(0, near));
-                if (far != null) pq.Enqueue(new Tuple<double, KDNode>(0, far));
-
-            } while (pq.Count() != 0);
-            return kDNodes;
-        }
+     
 
     }
 }
