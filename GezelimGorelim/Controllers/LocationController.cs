@@ -8,7 +8,9 @@ namespace GezelimGorelim.Controllers
     public class LocationController : ApiController
     {
         public static List<Location> reports = new List<Location> {};
-   
+
+        //Clienttan gönderilen veriler./api/location adresine girilmesiyle birlikte reporta ekleniyor.
+
         [HttpGet]
         public List<Location> Get()
         {

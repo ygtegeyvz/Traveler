@@ -83,33 +83,8 @@ namespace GezelimGorelim
                     throw new ArgumentException("Object is not a KDNode");
             }
 
-            /// <summary>
-            /// Overloading the == operator.
-            /// </summary>
-            /// <param name="a">A KDNode which is on the left side of the ==.</param>
-            /// <param name="b">A KDNode which is on the right side of the ==.</param>
-            /// <returns>
-            /// Returns whether a equals b, using the .Equals method.
-            /// Returns using .ReferenceEquals method if either or both a and b are null.
-            /// </returns>
-            public static bool operator ==(KDNode a, KDNode b)
-            {
-                if (object.ReferenceEquals(a, null))
-                    return object.ReferenceEquals(b, null);
-
-                return a.Equals(b);
-            }
-
-            /// <summary>
-            /// Overloading the != operator.
-            /// </summary>
-            /// <param name="a">A KDNode which is on the left side of the !=.</param>
-            /// <param name="b">A KDNode which is on the right side of the !=.</param>
-            /// <returns>Returns the inverse of the == method.</returns>
-            public static bool operator !=(KDNode a, KDNode b)
-            {
-                return !(a == b);
-            }
+         
+   
 
             /// <summary>The Data property represents the coordinate points.</summary>
             /// <value>The Data property gets the coordinates of the Point field, data.</value>

@@ -58,6 +58,7 @@
             this.splitter1.Size = new System.Drawing.Size(506, 495);
             this.splitter1.TabIndex = 9;
             this.splitter1.TabStop = false;
+            
             // 
             // map
             // 
@@ -84,6 +85,7 @@
             this.map.Size = new System.Drawing.Size(482, 471);
             this.map.TabIndex = 10;
             this.map.Zoom = 0D;
+         
             // 
             // button1
             // 

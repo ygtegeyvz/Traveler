@@ -31,16 +31,18 @@ namespace GezelimForm
         {
             InitializeComponent();
             map.MouseClick += new MouseEventHandler(map_MouseClick);
-            postRequest();
+            postLocationData();
+            
         }
-        async Task GetRequest()
+        //Serverdaki veriyi clienta çekmemize yarayan fonksiyon
+        async Task GetLocationData()
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://localhost:6354/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
+                //Json tipinde bir veri üstünde çalışıyoruz.
                 HttpResponseMessage response;
                 response = await client.GetAsync("api/Location");
                 if (response.IsSuccessStatusCode)
@@ -53,11 +55,14 @@ namespace GezelimForm
                     }
                     label3.Text = "Serverdan veri çekildi..";
                 }
+
+                else
+                    label3.Text = "Serverdan veri çekerken hata oluştu.";
             }
 
         }
-
-        async Task GetReductionRequest()
+        //İndirgenmiş veriyi çekmemize yarayan fonksiyon.
+        async Task GetReductionData()
         {
             using (var client = new HttpClient())
             {
@@ -65,33 +70,35 @@ namespace GezelimForm
                 client.BaseAddress = new Uri("http://localhost:6354/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                //Json tipinde bir veri üstünde çalışıyoruz.
                 HttpResponseMessage response;
                 response = await client.GetAsync("api/reduction");
-                    if (response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
+                {
+                    // BURADA HATA VAR
+                    ReductionClient reports = await response.Content.ReadAsAsync<ReductionClient>();
+                    //  foreach (var report in reports)
                     {
-                        // BURADA HATA VAR
-                        ReductionClient reports = await response.Content.ReadAsAsync<ReductionClient>();
-                        //  foreach (var report in reports)
+                        for (int i = 0; i < reports.coordinate.locationsX.Count; i++)
                         {
-                            for (int i = 0; i < reports.coordinate.locationsX.Count; i++)
-                            {
-                                ReductionlatitudeList.Add(reports.coordinate.locationsX[i]);
-                                ReductionlongitudeList.Add(reports.coordinate.locationsY[i]);
-                                label2.Text = "İndirgenen veri alındı.";
-                                label4.Text = "İndirgenme Süresi" + reports.timer.ToString();
-                                label5.Text = "İndirgenme Oranı:" + reports.indirgenmeOrani.ToString();
-                            }
+                            ReductionlatitudeList.Add(reports.coordinate.locationsX[i]);
+                            ReductionlongitudeList.Add(reports.coordinate.locationsY[i]);
+                            label2.Text = "İndirgenen veri alındı.";
+                            label4.Text = "İndirgenme Süresi" + reports.timer.ToString();
+                            label5.Text = "İndirgenme Oranı:" + reports.indirgenmeOrani.ToString();
                         }
                     }
-                
-
-
+                }
+                else
+                    label2.Text = "İndirgenmiş veri çekilirken hata oluştu.";
             }
 
         }
-
-        async Task GetQueryRequest()
+        //Sorgu sonucu oluşan veriyi çekmemize yarayan fonksiyon.
+        async Task GetQueryData()
         {
+            QuerylatList.Clear();
+            QuerylongList.Clear();
             using (var client = new HttpClient())
             {
                 var result = new List<QueryClient>();
@@ -102,29 +109,24 @@ namespace GezelimForm
                 response = await client.GetAsync("api/Query");
                     if (response.IsSuccessStatusCode)
                     {
-                        // BURADA HATA VAR
                         QueryClient reports = await response.Content.ReadAsAsync<QueryClient>();
-                        //foreach (var report in reports)
-                        //{
                         for (int i = 0; i < reports.queryLat.Count; i++)
                         {
                             QuerylatList.Add(reports.queryLat[i]);
                             QuerylongList.Add(reports.queryLong[i]);
                         }
-                        
-                        //}
                     }
-                
-                colorPoints(QuerylatList,QuerylongList,GMarkerGoogleType.green_small);
-
+                //Query Sonucu oluşan noktaları renklendirir.
+                colorPoints(QuerylatList,QuerylongList,GMarkerGoogleType.green_small);             
             }
 
         }
+        //Noktaları renklendirir.
         public void colorPoints(List<double>latitudeList,List<double> longitudeList,GMarkerGoogleType colour)
-        {
-           
+        {         
             List<GMapMarker> queryMarkerList = new List<GMapMarker>();
             GMapOverlay queryMarkers = new GMapOverlay("queryMarkers");
+            //Data kadar döngü dönüp MarkerList oluşturuyor.Haritaya ekleniyor.
             for (int i = 0; i < latitudeList.Count; i++)
             {
                 queryMarkerList.Add(new GMarkerGoogle((new PointLatLng(latitudeList[i], longitudeList[i])),
@@ -141,26 +143,24 @@ namespace GezelimForm
             map.Overlays.Add(queryMarkers);
         }
 
-
-        async Task postRequest()
+        //Txt'den alınan verileri servera gönderir.
+        async Task postLocationData()
         {
-            // string file_way = @"D:\githubRepo\Traveler\GezelimForm\bin\Debug\Dataset.txt";
-            //string file_way = @"C:\Belgeler\GitHub\Traveler\Dataset.txt";
-            //FileStream fs = new FileStream(file_way, FileMode.OpenOrCreate, FileAccess.Write);
             List<string> locations = new List<string>();
             List<string> locationsX = new List<string>();
             List<string> locationsY = new List<string>();
+            LocationClient newLocation = new LocationClient();
+            //Txt'yi oku ve satırları locations listesine ekle.
             StreamReader reader = new StreamReader("dataset1.txt");
             string contents = reader.ReadToEnd();
             var lines = contents.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string line in lines)
             {
                 locations.Add(line);
-            }
-
+            }    
             reader.Close();
-            LocationClient newLocation = new LocationClient();
-
+         
+            //Virgüle kadar oku latitude listesine at virgülden sonrasını longitude listesine at.
             for (int i = 0; i < locations.Count; i++)
             {
                 string[] point = locations[i].Split(',');
@@ -195,19 +195,20 @@ namespace GezelimForm
 
                         else
                         {
-                            label1.Text = "Olmadı Kanki";
+                            label1.Text = "Server'a veri eklenirken hata oluştu.";
 
                         }
                     }
 
                 }
             }
-            GetRequest();
+            //Servera veri eklendikten sonra veri çekme işlemi başlasın.
+            GetLocationData();
 
         }
 
-
-        async Task postLocation()
+        //Mouse'dan alınan noktaları Range Search algoritması için Query'e yollar.
+        async Task postMouseClickLocation()
         {
             LocationClient newLocation = new LocationClient();
             for (int i = 0; i < latList.Count; i++)
@@ -226,22 +227,19 @@ namespace GezelimForm
                     {
                         bool result = await response.Content.ReadAsAsync<bool>();
                         if (result)
+                        {
+
                             label7.Text = "Tamamdır";
+                        }
+                           
                         else
                             label7.Text = "Olmadı Kanki";
                     }
                 }
             }
         }
-
-
-
-
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-        public void maps()
+        //Harita işlemleri.
+        public void MapProcess()
         {
             if (latitudeList.Count != 0)
             {
@@ -249,11 +247,13 @@ namespace GezelimForm
                 GMapOverlay routes = new GMapOverlay("routes");
                 List<PointLatLng> points = new List<PointLatLng>();
                 List<GMapMarker> markerList = new List<GMapMarker>();
+                //Harita ayarları
                 map.MapProvider = GMapProviders.GoogleMap;
                 map.MaxZoom = 100;
                 map.MinZoom = 1;
                 map.DragButton = MouseButtons.Right;
                 GMapOverlay markers = new GMapOverlay("markers");
+                //Ham veri haritaya ekleniyor.
                 for (int i = 0; i < latitudeList.Count; i++)
                 {
                     markerList.Add(new GMarkerGoogle(new PointLatLng(double.Parse(latitudeList[i], CultureInfo.InvariantCulture.NumberFormat), double.Parse(longitudeList[i], CultureInfo.InvariantCulture.NumberFormat)),
@@ -274,13 +274,13 @@ namespace GezelimForm
                     points.Add(new PointLatLng(double.Parse(latitudeList[i], CultureInfo.InvariantCulture.NumberFormat), double.Parse(longitudeList[i], CultureInfo.InvariantCulture.NumberFormat)));
                 }
 
-
+                //Ham verinin rotası çiziliyor.
                 GMapRoute route = new GMapRoute(points, "Veriler");
                 route.Stroke = new Pen(Color.Red, 5);
                 routes.Routes.Add(route);
                 map.Overlays.Add(routes);
                 ///////////////////////////////////////////////////////////////
-
+                //İndirgenmiş veri haritaya ekleniyor.
                 GMapOverlay Reductionroutes = new GMapOverlay("Reductionroutes");
                 colorPoints(ReductionlatitudeList,ReductionlongitudeList,GMarkerGoogleType.blue_small);
 
@@ -289,63 +289,61 @@ namespace GezelimForm
                     Reductionpoints.Add(new PointLatLng(ReductionlatitudeList[i], ReductionlongitudeList[i]));
                 }
 
-
+                //İndirgenmiş verinin rotası çiziliyor.
                 GMapRoute Reductionroute = new GMapRoute(Reductionpoints, "Veriler");
                 Reductionroute.Stroke = new Pen(Color.Blue, 5);
                 Reductionroutes.Routes.Add(Reductionroute);
                 map.Overlays.Add(Reductionroutes);
             }
             else
-                GetRequest();
-
+                GetLocationData();
         }
-        private void button1_Click(object sender, EventArgs e)
+        protected override void OnPaint(PaintEventArgs e)
         {
+            base.OnPaint(e);
 
-            maps();
-
+            Graphics g = e.Graphics;
+            using (Pen selPen = new Pen(Color.Blue))
+            {
+                g.DrawRectangle(selPen, 10, 10, 50, 50);
+            }
         }
-
-        private async void button4_Click(object sender, EventArgs e)
-        {
-            await GetReductionRequest();
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            postLocation();
-        }
-
+        //Mouse tıklandığında koordinat almasını sağlayan fonksiyon.
         private void map_MouseClick(object sender, MouseEventArgs e)
         {
+            double lat;
+            double lng;
             if (latList.Count < 2)
             {
                 if (e.Button == System.Windows.Forms.MouseButtons.Left)
                 {
-                    double lat = map.FromLocalToLatLng(e.X, e.Y).Lat;
+                    lat = map.FromLocalToLatLng(e.X, e.Y).Lat;
                     latList.Add(lat);
-                    double lng = map.FromLocalToLatLng(e.X, e.Y).Lng;
+                    lng = map.FromLocalToLatLng(e.X, e.Y).Lng;
                     longList.Add(lng);
                     label6.Text = ("Nokta alındı.");
                 }
 
             }
-            if (latList.Count == 2)
+         else if (latList.Count == 2)
             {
-                postLocation();
+                postMouseClickLocation();
             }
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MapProcess();
+        }
 
-
+        private async void button4_Click(object sender, EventArgs e)
+        {
+            await GetReductionData();
         }
         private void button6_Click(object sender, EventArgs e)
         {
-            GetQueryRequest();
+            GetQueryData();
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            GetRequest();
-        }
     }
 }

@@ -16,6 +16,7 @@ namespace GezelimGorelim.Controllers
         [HttpGet]
         public QueryModel Get()
         {
+           
             MiningController mine = new MiningController();
             {
                 for (int i = 0; i < mine.Reduction().coordinate.locationsX.Count; i++)
@@ -24,8 +25,6 @@ namespace GezelimGorelim.Controllers
                     ReductionlongitudeList.Add(mine.Reduction().coordinate.locationsY[i]);
                 }
             }
-
-
             KDTree t = new KDTree(new Points(ReductionlatitudeList[0], ReductionlongitudeList[0]), 2);
             for (int i = 0; i < ReductionlatitudeList.Count; i++)
             {
@@ -49,8 +48,6 @@ namespace GezelimGorelim.Controllers
                 found = t.RangeSearch(new KDNode(new Points(ReductionlatitudeList[i], ReductionlongitudeList[i])), find, find2);
             }
     
-          //  List<KDNode> found = t.RangeSearch(find, find2);
-            //En yakın noktayı buluyor.
             List<Points> foundData = new List<Points>();
             for (int i = 0; i < found.Count; i++)
             {

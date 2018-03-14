@@ -111,19 +111,7 @@ namespace GezelimGorelim
                 }
             }
 
-            /// <summary>Returns the element at the front of the Priority Queue without removing it.</summary>
-            /// <returns>The element at the front of the queue.</returns>
-            /// <exception cref="InvalidOperationException">The Queue is empty.</exception>
-            public T Peek()
-            {
-                if (this.dataHeap.Count == 0)
-                {
-                    throw new InvalidOperationException("Queue is empty.");
-                }
-
-                T frontItem = dataHeap[0];
-                return frontItem;
-            }
+         
 
             /// <summary>
             /// Gets the number of elements currently contained in the <see cref="PriorityQueue"/>
@@ -140,30 +128,7 @@ namespace GezelimGorelim
                 this.dataHeap.Clear();
             }
 
-            /// <summary>Copies the queue elements to an existing array, starting at the specified index.</summary>
-            /// <exception cref="ArgumentNullException">Array is null. </exception>
-            /// <exception cref="IndexOutOfRangeException">Index is less than zero or bigger than array length. </exception>
-            /// <exception cref="ArgumentException">The number of elements int the source is greater than the available space.</exception>
-            public void CopyToArray(T[] array, int index)
-            {
-                if (array == null)
-                {
-                    throw new ArgumentNullException("Array");
-                }
-
-                int length = array.Length;
-                if (index < 0 || index >= length)
-                {
-                    throw new IndexOutOfRangeException("Index must be between zero and array length.");
-                }
-                if (length - index < this.dataHeap.Count - 1)
-                {
-                    throw new ArgumentException("Queue is bigger than array");
-                }
-
-                T[] data = this.dataHeap.ToArray();
-                Array.Copy(data, 0, array, index, data.Length);
-            }
+      
 
             /// <summary>
             /// Checks the consistency of the heap.
@@ -207,11 +172,7 @@ namespace GezelimGorelim
                 dataHeap[second] = value;
             }
 
-            public override string ToString()
-            {
-                string queueString = string.Join("\n", dataHeap.ToArray());
-                return queueString;
-            }
+           
         }
     }
 

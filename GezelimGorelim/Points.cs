@@ -82,37 +82,7 @@ namespace GezelimGorelim
                     throw new ArgumentException("Object is not a Temperature");
             }
 
-            /// <summary>
-            /// Overloading the == operator.
-            /// </summary>
-            /// <param name="a">A Point which is on the left side of the ==.</param>
-            /// <param name="b">A Point which is on the right side of the ==.</param>
-            /// <returns>
-            /// Returns whether a equals b, using the .Equals method.
-            /// Returns using .ReferenceEquals method if either or both a and b are null.
-            /// </returns>
-            public static bool operator ==(Points a, Points b)
-            {
-                if (ReferenceEquals(a, null) || ReferenceEquals(b, null)) return true;
-                if (a[0] == b[0] && a[1] == b[1]) return true;
-                else return false;
-            }
-
-            /// <summary>
-            /// Overloading the != operator.
-            /// </summary>
-            /// <param name="a">A Point which is on the left side of the !=.</param>
-            /// <param name="b">A Point which is on the right side of the !=.</param>
-            /// <returns>
-            /// Returns whether a equals b, using the .Equals method.
-            /// Returns using .ReferenceEquals method if either or both a and b are null.
-            /// </returns>
-            public static bool operator !=(Points a, Points b)
-            {
-                if (ReferenceEquals(a, null) || ReferenceEquals(b, null)) return true;
-                if (a[0] != b[0] || a[1] != b[1]) return true;
-                else return false;
-            }
+           
 
             /// <summary>
             /// Defines an indexer in order to access the coordinate values.
@@ -148,13 +118,6 @@ namespace GezelimGorelim
             longitude = longCoord;
             }
 
-            /// <summary>
-            /// Override ToString to display Point objects in proper format.
-            /// </summary>
-            public override string ToString()
-            {
-                return "(" + latitude + ", " + longitude + ")";
-            }
         }
     }
 
