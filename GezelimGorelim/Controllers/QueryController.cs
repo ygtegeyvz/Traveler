@@ -1,7 +1,10 @@
-﻿using GezelimGorelim.Models;
+﻿using AForge;
+using AForge.Math.Geometry;
+using GezelimGorelim.Models;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Web.Http;
-
 
 namespace GezelimGorelim.Controllers
 {
@@ -63,7 +66,59 @@ namespace GezelimGorelim.Controllers
 
 
         }
+        [Route("api/BasicQuery")]
+        [HttpGet]
+        public QueryModel Getir()
+        {
 
+            LocationController locCont = new LocationController();
+            {
+                for (int i = 0; i < locCont.Get().Count; i++)
+                {
+                    
+                    ReductionlatitudeList.Add(locCont.Get().ElementAt(i).locationsX);
+                    ReductionlongitudeList.Add(locCont.Get().ElementAt(i).locationsY);
+                }
+            }
+            KDTree t = new KDTree(new Points(ReductionlatitudeList[0], ReductionlongitudeList[0]), 2);
+            for (int i = 0; i < ReductionlatitudeList.Count; i++)
+            {
+                t.Insert(new GezelimGorelim.KDNode(new GezelimGorelim.Points(ReductionlatitudeList[i], ReductionlongitudeList[i])), t.Root);
+
+            }
+
+            double searchPoint1x = double.Parse(reports[0].locationsX);
+            double searchPoint1y = double.Parse(reports[0].locationsY);
+            double searchPoint2x = double.Parse(reports[1].locationsX);
+            double searchPoint2y = double.Parse(reports[1].locationsY);
+            Points find = new Points(searchPoint1x, searchPoint1y);
+            Points find2 = new Points(searchPoint2x, searchPoint2y);
+
+            List<double> queryLat = new List<double>();
+            List<double> queryLong = new List<double>();
+
+            List<KDNode> found = new List<KDNode>();
+            for (int i = 0; i < locCont.Get().Count; i++)
+            {
+              
+                found = t.RangeSearch(new KDNode(new Points(ReductionlatitudeList[i], ReductionlongitudeList[i])), find, find2);
+            }
+
+            List<Points> foundData = new List<Points>();
+            for (int i = 0; i < found.Count; i++)
+            {
+                foundData.Add(found[i].data);
+                queryLat.Add(foundData[i].latitude);
+                queryLong.Add(foundData[i].longitude);
+
+            }
+            queryObject.queryLat = queryLat;
+            queryObject.queryLong = queryLong;
+
+            return queryObject;
+
+
+        }
 
         [HttpPost]
         public bool Post(Query report)

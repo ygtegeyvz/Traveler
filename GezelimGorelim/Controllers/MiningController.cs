@@ -1,14 +1,9 @@
 ﻿using AForge;
 using AForge.Math.Geometry;
-using GezelimGorelim;
-using GezelimGorelim.Controllers;
 using GezelimGorelim.Models;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
-using System.Web;
 using System.Web.Http;
 
 namespace GezelimGorelim.Controllers

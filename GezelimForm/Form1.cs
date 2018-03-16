@@ -121,6 +121,35 @@ namespace GezelimForm
             }
 
         }
+
+        async Task GetLocationQueryData()
+        {
+            QuerylatList.Clear();
+            QuerylongList.Clear();
+            using (var client = new HttpClient())
+            {
+                var result = new List<QueryClient>();
+                client.BaseAddress = new Uri("http://localhost:6354/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage response;
+                response = await client.GetAsync("api/BasicQuery");
+                if (response.IsSuccessStatusCode)
+                {
+                    QueryClient reports = await response.Content.ReadAsAsync<QueryClient>();
+                    for (int i = 0; i < reports.queryLat.Count; i++)
+                    {
+                        QuerylatList.Add(reports.queryLat[i]);
+                        QuerylongList.Add(reports.queryLong[i]);
+                    }
+                }
+                //Query Sonucu oluşan noktaları renklendirir.
+                colorPoints(QuerylatList, QuerylongList, GMarkerGoogleType.green_small);
+            }
+
+        }
+
+
         //Noktaları renklendirir.
         public void colorPoints(List<double>latitudeList,List<double> longitudeList,GMarkerGoogleType colour)
         {         
@@ -298,16 +327,34 @@ namespace GezelimForm
             else
                 GetLocationData();
         }
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            base.OnPaint(e);
 
-            Graphics g = e.Graphics;
-            using (Pen selPen = new Pen(Color.Blue))
-            {
-                g.DrawRectangle(selPen, 10, 10, 50, 50);
-            }
+        public void dikdortgenOlustur()
+        {
+            latList.Add(latList[0]);
+            latList.Add(latList[1]);
+            longList.Add(longList[1]);
+            longList.Add(longList[0]);
+            
         }
+
+        public void dikdortgenCizdir()
+        {
+            GMapOverlay routes = new GMapOverlay("routes");
+            List<PointLatLng> points = new List<PointLatLng>();
+
+            points.Add(new PointLatLng(latList[0], longList[0]));
+            points.Add(new PointLatLng(latList[1], longList[0]));
+            points.Add(new PointLatLng(latList[1], longList[1]));
+            points.Add(new PointLatLng(latList[0], longList[1]));
+            points.Add(new PointLatLng(latList[0], longList[0]));
+
+            GMapRoute route = new GMapRoute(points, "Dikdörtgen");
+            route.Stroke = new Pen(Color.Black, 5);
+            routes.Routes.Add(route);
+            map.Overlays.Add(routes);
+
+        }
+
         //Mouse tıklandığında koordinat almasını sağlayan fonksiyon.
         private void map_MouseClick(object sender, MouseEventArgs e)
         {
@@ -322,11 +369,14 @@ namespace GezelimForm
                     lng = map.FromLocalToLatLng(e.X, e.Y).Lng;
                     longList.Add(lng);
                     label6.Text = ("Nokta alındı.");
+
                 }
 
             }
-         else if (latList.Count == 2)
+            else if (latList.Count == 2)
             {
+                dikdortgenOlustur();
+                dikdortgenCizdir();
                 postMouseClickLocation();
             }
         }
@@ -345,5 +395,9 @@ namespace GezelimForm
 
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            GetLocationQueryData();
+        }
     }
 }

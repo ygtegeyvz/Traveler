@@ -264,3 +264,4 @@ C:\Belgeler\GitHub\Traveler\GezelimGorelim\bin\System.Web.Http.Cors.xml
 D:\githubRepo\Traveler\GezelimGorelim\bin\System.Web.Cors.dll
 D:\githubRepo\Traveler\GezelimGorelim\bin\System.Web.Http.Cors.dll
 D:\githubRepo\Traveler\GezelimGorelim\bin\System.Web.Http.Cors.xml
+C:\Belgeler\GitHub\Traveler\GezelimGorelim\obj\Debug\GezelimGorelim.csprojResolveAssemblyReference.cache
