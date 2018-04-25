@@ -1,0 +1,62 @@
+= Traveler(Trajectory)-Gezgin(Rota)
+
+== Hakkında
+Bu uygulama .txt formatında verilen data seti(Data setin formatı:"latitude":"39.9276","longitude":"116.4708") alarak çalışır.
+
+- Bu data set üzerinde belirlediğimiz kurallara(Çok uzak noktalardan kurtulma mantığıyla) göre veri indirgenmesi yapabilir.
+
+- İsterseniz indirgenmeden önce veya indirgendikten sonra bu verileri farklı renklerde arasında rota çizili bir şekilde harita üstünde gösterebilir.
+
+- Belirlenen dikdörtgensel alan içerisinde kalan noktaları arama fonksiyonuyla bulup farklı bir renge çevirir ve  gösterir.
+
+== About
+This application works by receiving the data set given in .txt format("latitude":"39.9276","longitude":"116.4708").
+
+- This application can reduce the data according to the rules we set on the data set.(Ignore too far data.)
+
+- Before or after being reduced, this data can be displayed on the map as a route between different colors.
+
+- The search function finds the points within the specified rectangular area and turn them to a different color.
+
+
+== Çalışma Mantığı
+Çalışma Mantığı:Alınan .txt dosyasındaki verileri,json formatında servera gönderilir.
+
+Server kısmı:Web apidir.Serverda veri indirgeme ve arama işlemleri(arama için veriler kd-Tree yapısında tutulmuş ve arama kd-Tree'de yapılmıştır)yapılır bu sonuç clienta yollanır.
+
+Client kısmı:Harita üzerinde gösterme,rota,pin,renklendirme işlemleri yapılır.
+
+== Working Logic
+Working Logic:The data in the .txt file is sent to the server in json format.
+
+Server:This is a Web api.The server performs data reduction and search operations and sends the result to the client.(Search service built on Kd-Tree and it finds coordinates in rectangle selected by user)
+
+Client:Display, route, pin, coloring are done on the map.
+
+== Credits
+
+Author : Yiğit Ege Yavuz
+
+[link=https://github.com/ygtegeyvz]
+image::https://asciidoctor.org/images/octocat.jpg[Github Profile]
+
+
+== License
+
+----
+
+Copyright 2017 ygtegeyvz, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+----
